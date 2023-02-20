@@ -1,4 +1,8 @@
+# Project
 build/
 
 # Visual Studio
 .vs/
+
+# CMake
+Testing/
