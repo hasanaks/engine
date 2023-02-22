@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.22)
 
-set(OpenGL_GL_PREFERENCE "GLVND")
+#set(OpenGL_GL_PREFERENCE "GLVND")
 
 project(engine)
-add_executable(engine main.cpp)
+add_executable(engine Motion.cpp)
 
 include(FetchContent)
 FetchContent_Declare(
