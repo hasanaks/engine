@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.22)
 
 project(engine)
-add_executable(engine Motion.cpp)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -10,6 +9,20 @@ FetchContent_Declare(
   GIT_TAG 4.2.0
   GIT_SHALLOW TRUE
 )
-FetchContent_MakeAvailable(raylib)
+FetchContent_Declare(
+  doctest
+  GIT_REPOSITORY https://github.com/doctest/doctest
+  GIT_TAG v2.4.9
+  GIT_SHALLOW TRUE
+)
+FetchContent_MakeAvailable(raylib doctest)
+
+include_directories(${doctest_SOURCE_DIR}/doctest)
+include(${doctest_SOURCE_DIR}/scripts/cmake/doctest.cmake)
+
+include(CTest)
+add_subdirectory(tests)
+
+add_executable(engine main.cpp)
 
 target_link_libraries(engine raylib)
