@@ -14,13 +14,13 @@ int main() {
   world.AddParticle(particle);
 
   while (!WindowShouldClose()) {
-	world.Step(GetFrameTime());
+    world.Step(GetFrameTime());
 
     BeginDrawing();
 
     ClearBackground(BLACK);
     DrawRectangle(particle->position.x, -particle->position.y, 60, 60, WHITE);
-     
+
     EndDrawing();
   }
 
