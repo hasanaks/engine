@@ -7,8 +7,9 @@ void World::Step(float dt) {
 
     particle->position +=
         particle->velocity * dt + 0.5f * acceleration * dt * dt;
-    particle->velocity += acceleration * dt;
+    particle->velocity += 0.5f * (particle->acceleration + acceleration) * dt;
 
+    particle->acceleration = acceleration;
     particle->force = {0, 0};
   }
 }
