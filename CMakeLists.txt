@@ -23,6 +23,6 @@ include(${doctest_SOURCE_DIR}/scripts/cmake/doctest.cmake)
 include(CTest)
 add_subdirectory(tests)
 
-add_executable(engine main.cpp Vector.cpp)
+add_executable(engine main.cpp Vector.cpp World.cpp)
 
 target_link_libraries(engine raylib)
