@@ -17,12 +17,14 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(raylib doctest)
 
+add_library(engine Vector.cpp World.cpp)
+target_link_libraries(engine raylib)
+
+add_executable(engine-exec main.cpp)
+target_link_libraries(engine-exec engine)
+
 include_directories(${doctest_SOURCE_DIR}/doctest)
 include(${doctest_SOURCE_DIR}/scripts/cmake/doctest.cmake)
 
 include(CTest)
 add_subdirectory(tests)
-
-add_executable(engine main.cpp Vector.cpp World.cpp)
-
-target_link_libraries(engine raylib)
