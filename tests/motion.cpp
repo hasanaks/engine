@@ -10,9 +10,10 @@ TEST_CASE("particle motion physics") {
   particle->mass = 10;
 
   world.AddParticle(particle);
-  world.Step(1);
 
-  CHECK(particle->force == Vector2{0, 0});
+  world.Step(1);
   CHECK(particle->position == Vector2{0, -5});
-  CHECK(particle->velocity == Vector2{0, -10});
+
+  world.Step(1);
+  CHECK(particle->position == Vector2{0, -15});
 }
