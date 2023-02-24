@@ -11,10 +11,11 @@ public:
   void Step(float dt) {
     for (auto &particle : particles) {
       particle->force += particle->mass * gravity;
+      auto acceleration = particle->force / particle->mass;
 
       particle->position +=
-          particle->velocity * dt + 0.5f * particle->velocity * dt * dt;
-      particle->velocity += particle->force / particle->mass * dt;
+          particle->velocity * dt + 0.5f * acceleration * dt * dt;
+      particle->velocity += acceleration * dt;
 
       particle->force = {0, 0};
     }
