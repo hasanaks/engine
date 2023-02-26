@@ -23,7 +23,7 @@ int main() {
   float physicsTimeStep = 0.01f;
 
   while (!WindowShouldClose()) {
-    accumulator += GetFrameTime();
+	const float frameTime = GetFrameTime();
 
     if (IsKeyDown(KEY_LEFT)) {
       camera.target.x -= 10;
@@ -43,6 +43,7 @@ int main() {
 
     std::vector<Particle> lastState = world.CopyState();
 
+    accumulator += frameTime;
     while (accumulator >= physicsTimeStep) {
       lastState = world.CopyState();
 
