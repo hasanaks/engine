@@ -25,20 +25,21 @@ int main() {
   while (!WindowShouldClose()) {
 	const float frameTime = GetFrameTime();
 
+	const float cameraSpeed = 500;
     if (IsKeyDown(KEY_LEFT)) {
-      camera.target.x -= 10;
+      camera.target.x -= cameraSpeed * frameTime;
     }
 
     if (IsKeyDown(KEY_RIGHT)) {
-      camera.target.x += 10;
+      camera.target.x += cameraSpeed * frameTime;
     }
 
     if (IsKeyDown(KEY_UP)) {
-      camera.target.y -= 10;
+      camera.target.y -= cameraSpeed * frameTime;
     }
 
     if (IsKeyDown(KEY_DOWN)) {
-      camera.target.y += 10;
+      camera.target.y += cameraSpeed * frameTime;
     }
 
     std::vector<Particle> lastState = world.CopyState();
