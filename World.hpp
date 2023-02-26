@@ -11,6 +11,7 @@ public:
   void Step(float dt);
   void AddParticle(std::shared_ptr<Particle> particle);
   void RemoveParticle(std::shared_ptr<Particle> particle);
+  std::vector<Particle> CopyState();
 
 private:
   std::vector<std::shared_ptr<Particle>> particles;

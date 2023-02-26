@@ -41,17 +41,34 @@ int main() {
       camera.target.y += 10;
     }
 
+    std::vector<Particle> lastState = world.CopyState();
+
     while (accumulator >= physicsTimeStep) {
+      lastState = world.CopyState();
+
       world.Step(physicsTimeStep);
-	  accumulator -= physicsTimeStep;
+      accumulator -= physicsTimeStep;
     }
+
+    const auto interpolation = accumulator / physicsTimeStep;
+
+    auto currentState = world.CopyState();
+    std::vector<Vector2> positions;
+    std::transform(currentState.cbegin(), currentState.cend(),
+                   lastState.cbegin(), std::back_inserter(positions),
+                   [&interpolation](const auto& p1, const auto& p2) {
+                     return p1.position * interpolation +
+                            p2.position * (1.f - interpolation);
+                   });
 
     BeginDrawing();
 
     ClearBackground(BLACK);
 
     BeginMode2D(camera);
-    DrawRectangle(particle->position.x, -particle->position.y, 60, 60, WHITE);
+    for (auto &position : positions) {
+      DrawRectangle(position.x, -position.y, 60, 60, WHITE);
+    }
     BeginMode2D(camera);
 
     EndDrawing();

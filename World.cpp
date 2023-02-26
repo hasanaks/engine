@@ -22,3 +22,13 @@ void World::RemoveParticle(std::shared_ptr<Particle> particle) {
   particles.erase(std::remove(particles.begin(), particles.end(), particle),
                   particles.end());
 }
+
+std::vector<Particle> World::CopyState() {
+  std::vector<Particle> copied;
+
+  for (auto &particle : particles) {
+	copied.push_back(*particle);
+  }
+
+  return copied;
+}
