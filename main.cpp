@@ -45,7 +45,9 @@ int main() {
 
     accumulator += frameTime;
     while (accumulator >= physicsTimeStep) {
-      lastState = world.CopyState();
+	  if (accumulator - physicsTimeStep < physicsTimeStep) {
+		lastState = world.CopyState();
+	  }
 
       world.Step(physicsTimeStep);
       accumulator -= physicsTimeStep;
