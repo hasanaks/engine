@@ -23,9 +23,9 @@ int main() {
   float physicsTimeStep = 0.01f;
 
   while (!WindowShouldClose()) {
-	const float frameTime = GetFrameTime();
+    const float frameTime = GetFrameTime();
 
-	const float cameraSpeed = 500;
+    const float cameraSpeed = 500;
     if (IsKeyDown(KEY_LEFT)) {
       camera.target.x -= cameraSpeed * frameTime;
     }
@@ -46,9 +46,9 @@ int main() {
 
     accumulator += frameTime;
     while (accumulator >= physicsTimeStep) {
-	  if (accumulator - physicsTimeStep < physicsTimeStep) {
-		lastState = world.CopyState();
-	  }
+      if (accumulator - physicsTimeStep < physicsTimeStep) {
+        lastState = world.CopyState();
+      }
 
       world.Step(physicsTimeStep);
       accumulator -= physicsTimeStep;
@@ -60,7 +60,7 @@ int main() {
     std::vector<Vector2f> positions;
     std::transform(currentState.cbegin(), currentState.cend(),
                    lastState.cbegin(), std::back_inserter(positions),
-                   [&interpolation](const auto& p1, const auto& p2) {
+                   [&interpolation](const auto &p1, const auto &p2) {
                      return p1.position * interpolation +
                             p2.position * (1.f - interpolation);
                    });

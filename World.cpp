@@ -27,7 +27,7 @@ std::vector<Particle> World::CopyState() {
   std::vector<Particle> copied;
 
   for (auto &particle : particles) {
-	copied.push_back(*particle);
+    copied.push_back(*particle);
   }
 
   return copied;

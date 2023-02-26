@@ -12,6 +12,6 @@ Vector2f operator/(const Vector2f &lhs, const float &rhs);
 Vector2f operator-(const Vector2f &rhs);
 void operator+=(Vector2f &lhs, const Vector2f &rhs);
 void operator-=(Vector2f &lhs, const Vector2f &rhs);
-void operator*=(Vector2f &lhs, const float& rhs);
+void operator*=(Vector2f &lhs, const float &rhs);
 bool operator==(const Vector2f &lhs, const Vector2f &rhs);
 bool operator!=(const Vector2f &lhs, const Vector2f &rhs);
