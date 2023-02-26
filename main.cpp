@@ -4,9 +4,8 @@
 #include "World.hpp"
 
 int main() {
+  SetConfigFlags(FLAG_VSYNC_HINT);
   InitWindow(1200, 800, "Engine");
-
-  SetTargetFPS(120);
 
   Camera2D camera = {
 	.offset{GetScreenWidth() / 2.f, GetScreenHeight() / 2.f},
