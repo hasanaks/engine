@@ -1,10 +1,10 @@
 #pragma once
-#include <raylib.h>
+#include "Vector.hpp"
 
 struct Particle {
-  Vector2 position;
-  Vector2 velocity;
-  Vector2 force;
-  Vector2 acceleration;
+  Vector2f position;
+  Vector2f velocity;
+  Vector2f force;
+  Vector2f acceleration;
   float mass;
 };

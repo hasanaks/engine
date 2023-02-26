@@ -15,5 +15,5 @@ public:
 
 private:
   std::vector<std::shared_ptr<Particle>> particles;
-  const Vector2 gravity = {0, -10};
+  const Vector2f gravity = {0, -10};
 };

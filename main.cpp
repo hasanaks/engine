@@ -54,7 +54,7 @@ int main() {
     const auto interpolation = accumulator / physicsTimeStep;
 
     auto currentState = world.CopyState();
-    std::vector<Vector2> positions;
+    std::vector<Vector2f> positions;
     std::transform(currentState.cbegin(), currentState.cend(),
                    lastState.cbegin(), std::back_inserter(positions),
                    [&interpolation](const auto& p1, const auto& p2) {
