@@ -70,7 +70,7 @@ int main() {
     for (auto &position : positions) {
       DrawRectangle(position.x, -position.y, 60, 60, WHITE);
     }
-    BeginMode2D(camera);
+    EndMode2D();
 
     EndDrawing();
   }
