@@ -2,17 +2,17 @@
 #include <raylib.h>
 
 #include "World.hpp"
+#include "Collusion.hpp"
 
 int main() {
   SetConfigFlags(FLAG_VSYNC_HINT);
   InitWindow(1200, 800, "Engine");
 
-  Camera2D camera = {
-      .offset{GetScreenWidth() / 2.f, GetScreenHeight() / 2.f},
-      .target{},
-      .rotation{},
-      .zoom = 1,
-  };
+  Camera2D camera{};
+  camera.offset={GetScreenWidth() / 2.f, GetScreenHeight() / 2.f};
+  camera.target={};
+  camera.rotation={};
+  camera.zoom = 1;
 
   World world;
   auto particle = std::make_shared<Particle>();
