@@ -1,6 +1,4 @@
 #include "Collusion.hpp"
-#include <vector>
-#include "Vector.hpp"
 
 
 struct AABB {
@@ -61,11 +59,13 @@ bool isOverlapping(AABB* a, AABB* b) {
 	return true;
 }
 
-void dýdüdudü() {
-	for ( int i = 0; i <boxes.size();i++)
+std::vector<debut> activeList;
+
+void EdgeInit() {
+	for (int i = 0; i < boxes.size(); i++)
 	{
-		knife_edge begin=NULL;
-		knife_edge end=NULL;
+		knife_edge begin = NULL;
+		knife_edge end = NULL;
 		begin.box = boxes[i];
 		begin.b = 1;
 		begin.mag = begin.box->min.x;
@@ -76,8 +76,8 @@ void dýdüdudü() {
 		elp.push_back(end);
 	}
 	selectionSort(elp, elp.size());
-
-	std::vector<debut> activeList;
+}
+	void relayer(){
 	int id = 0;
 	while (id<elp.size()-1)
 	{
@@ -105,4 +105,22 @@ void dýdüdudü() {
 		id++;
 	}
 
+}
+
+
+int isActive() {
+	for (int i = 0; i < activeList.size(); i++) {
+		AABB* b1 = activeList[0].b1;
+		AABB* b2 = activeList[0].b2;
+		if(isOverlapping(b1,b2))
+		{
+			narrowPhase(b1,b2);
+		}
+	}
+}
+
+int narrowPhase(AABB* b1, AABB* b2) {
+
+	//will be done
+	return 0;
 }
