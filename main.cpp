@@ -16,9 +16,6 @@ int main() {
   };
 
   World world({0, 10.f});
-  auto particle = std::make_shared<Particle>();
-  particle->mass = 100;
-  world.AddParticle(particle);
 
   float accumulator = 0;
   float physicsTimeStep = 0.01f;
