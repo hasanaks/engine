@@ -14,7 +14,7 @@ int main() {
       .zoom = 1,
   };
 
-  World world;
+  World world({0, 10.f});
   auto particle = std::make_shared<Particle>();
   particle->mass = 100;
   world.AddParticle(particle);
@@ -45,6 +45,15 @@ int main() {
         camera.zoom = zoomIncrement;
     }
 
+	if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
+	  auto particle = std::make_shared<Particle>();
+	  particle->mass = 1;
+	  auto pos = GetScreenToWorld2D(GetMousePosition(), camera);
+	  particle->position = Vector2f{pos.x, pos.y};
+
+	  world.AddParticle(particle);
+	}
+
     std::vector<Particle> lastState = world.CopyState();
 
     accumulator += frameTime;
@@ -74,7 +83,7 @@ int main() {
 
     BeginMode2D(camera);
     for (auto &position : positions) {
-      DrawRectangle(position.x, -position.y, 60, 60, WHITE);
+      DrawRectangle(position.x, position.y, 60, 60, WHITE);
     }
     EndMode2D();
 

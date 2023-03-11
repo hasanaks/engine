@@ -1,5 +1,7 @@
 #include "World.hpp"
 
+World::World(Vector2f gravity) : gravity(gravity) {}
+
 void World::Step(float dt) {
   for (auto &particle : particles) {
     particle->force += particle->mass * gravity;

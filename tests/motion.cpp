@@ -4,7 +4,7 @@
 #include "../World.hpp"
 
 TEST_CASE("particle motion physics") {
-  World world;
+  World world({0, -10.f});
 
   auto particle = std::make_shared<Particle>();
   particle->mass = 10;
