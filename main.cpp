@@ -81,13 +81,13 @@ int main() {
     BeginDrawing();
 
     ClearBackground(BLACK);
-    DrawGrid(100, 50);
 
     BeginMode2D(camera);
 
     for (auto &position : positions) {
       DrawRectangle(position.x, position.y, 60, 60, WHITE);
     }
+
     EndMode2D();
 
     EndDrawing();
