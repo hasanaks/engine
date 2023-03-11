@@ -2,6 +2,8 @@
 
 struct Vector2f {
   float x, y;
+
+  static Vector2f Interpolate(Vector2f a, Vector2f b, float alpha);
 };
 
 Vector2f operator+(const Vector2f &lhs, const Vector2f &rhs);
@@ -15,3 +17,4 @@ void operator-=(Vector2f &lhs, const Vector2f &rhs);
 void operator*=(Vector2f &lhs, const float &rhs);
 bool operator==(const Vector2f &lhs, const Vector2f &rhs);
 bool operator!=(const Vector2f &lhs, const Vector2f &rhs);
+

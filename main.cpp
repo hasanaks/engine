@@ -72,11 +72,10 @@ int main() {
 
     auto currentState = world.CopyState();
     std::vector<Vector2f> positions;
-    std::transform(currentState.cbegin(), currentState.cend(),
-                   lastState.cbegin(), std::back_inserter(positions),
+    std::transform(lastState.cbegin(), lastState.cend(),
+                   currentState.cbegin(), std::back_inserter(positions),
                    [&interpolation](const auto &p1, const auto &p2) {
-                     return p1.position * interpolation +
-                            p2.position * (1.f - interpolation);
+					 return Vector2f::Interpolate(p1.position, p2.position, interpolation);
                    });
 
     BeginDrawing();
