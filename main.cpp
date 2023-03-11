@@ -1,5 +1,6 @@
 #include <iostream>
 #include <raylib.h>
+#include <rlgl.h>
 
 #include "World.hpp"
 
@@ -40,27 +41,26 @@ int main() {
       camera.offset = GetMousePosition();
 
       const float zoomIncrement = 0.125f;
-      camera.zoom += wheel * zoomIncrement;
+      camera.zoom += wheel * zoomIncrement * camera.zoom;
       if (camera.zoom < zoomIncrement)
         camera.zoom = zoomIncrement;
     }
 
-	if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
-	  auto particle = std::make_shared<Particle>();
-	  particle->mass = 1;
-	  auto pos = GetScreenToWorld2D(GetMousePosition(), camera);
-	  particle->position = Vector2f{pos.x, pos.y};
+    if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
+      auto particle = std::make_shared<Particle>();
+      particle->mass = 1;
+      auto pos = GetScreenToWorld2D(GetMousePosition(), camera);
+      particle->position = Vector2f{pos.x, pos.y};
 
-	  world.AddParticle(particle);
-	}
-
+      world.AddParticle(particle);
+    }
 
     accumulator += frameTime;
 
-	std::vector<Particle> lastState;
-	if (accumulator < physicsTimeStep) {
-		lastState = world.CopyState();
-	}
+    std::vector<Particle> lastState;
+    if (accumulator < physicsTimeStep) {
+      lastState = world.CopyState();
+    }
 
     while (accumulator >= physicsTimeStep) {
       if (accumulator - physicsTimeStep < physicsTimeStep) {
@@ -85,8 +85,10 @@ int main() {
     BeginDrawing();
 
     ClearBackground(BLACK);
+    DrawGrid(100, 50);
 
     BeginMode2D(camera);
+
     for (auto &position : positions) {
       DrawRectangle(position.x, position.y, 60, 60, WHITE);
     }
