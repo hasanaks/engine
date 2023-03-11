@@ -54,9 +54,14 @@ int main() {
 	  world.AddParticle(particle);
 	}
 
-    std::vector<Particle> lastState = world.CopyState();
 
     accumulator += frameTime;
+
+	std::vector<Particle> lastState;
+	if (accumulator < physicsTimeStep) {
+		lastState = world.CopyState();
+	}
+
     while (accumulator >= physicsTimeStep) {
       if (accumulator - physicsTimeStep < physicsTimeStep) {
         lastState = world.CopyState();
