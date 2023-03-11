@@ -25,21 +25,24 @@ int main() {
   while (!WindowShouldClose()) {
     const float frameTime = GetFrameTime();
 
-    const float cameraSpeed = 500;
-    if (IsKeyDown(KEY_LEFT)) {
-      camera.target.x -= cameraSpeed * frameTime;
+    if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+      Vector2 delta = GetMouseDelta();
+      Vector2f deltaf = {delta.x, delta.y};
+      deltaf *= -1.0f / camera.zoom;
+
+      camera.target.x += deltaf.x;
+      camera.target.y += deltaf.y;
     }
 
-    if (IsKeyDown(KEY_RIGHT)) {
-      camera.target.x += cameraSpeed * frameTime;
-    }
+    float wheel = GetMouseWheelMove();
+    if (wheel != 0) {
+      camera.target = GetScreenToWorld2D(GetMousePosition(), camera);
+      camera.offset = GetMousePosition();
 
-    if (IsKeyDown(KEY_UP)) {
-      camera.target.y -= cameraSpeed * frameTime;
-    }
-
-    if (IsKeyDown(KEY_DOWN)) {
-      camera.target.y += cameraSpeed * frameTime;
+      const float zoomIncrement = 0.125f;
+      camera.zoom += wheel * zoomIncrement;
+      if (camera.zoom < zoomIncrement)
+        camera.zoom = zoomIncrement;
     }
 
     std::vector<Particle> lastState = world.CopyState();
