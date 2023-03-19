@@ -37,3 +37,8 @@ bool operator==(const Vector2f &lhs, const Vector2f &rhs) {
 bool operator!=(const Vector2f &lhs, const Vector2f &rhs) {
   return !(lhs == rhs);
 }
+
+float operator*(const Vector2f& lhs, const Vector2f& rhs) {
+	float sum = lhs.x * rhs.x + lhs.y * rhs.y;
+	return sum;
+}
