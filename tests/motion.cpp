@@ -15,5 +15,5 @@ TEST_CASE("particle motion physics") {
   CHECK(particle->position == Vector2f{0, -5});
 
   world.Step(1);
-  CHECK(particle->position == Vector2f{0, -15});
+  CHECK(particle->position == Vector2f{0, -20});
 }
