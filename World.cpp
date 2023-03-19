@@ -5,13 +5,11 @@ World::World(Vector2f gravity) : gravity(gravity) {}
 void World::Step(float dt) {
   for (auto &particle : particles) {
     particle->force += particle->mass * gravity;
+
     auto acceleration = particle->force / particle->mass;
+    particle->position += particle->velocity * dt + 0.5f * acceleration * dt * dt;
+    particle->velocity += acceleration * dt;
 
-    particle->position +=
-        particle->velocity * dt + 0.5f * acceleration * dt * dt;
-    particle->velocity += 0.5f * (particle->acceleration + acceleration) * dt;
-
-    particle->acceleration = acceleration;
     particle->force = {0, 0};
   }
 }
