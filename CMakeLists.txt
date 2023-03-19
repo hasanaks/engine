@@ -21,10 +21,11 @@ FetchContent_Declare(
   GIT_TAG 3.4.0
   GIT_SHALLOW TRUE
 )
-FetchContent_MakeAvailable(raylib doctest eigen)
+FetchContent_MakeAvailable(raylib doctest)
+FetchContent_Populate(eigen)
+include_directories(${eigen_SOURCE_DIR})
 
 add_library(engine World.cpp Collision.cpp Constraint.cpp)
-target_link_libraries(engine eigen)
 
 add_executable(engine-exec main.cpp)
 target_link_libraries(engine-exec engine raylib)
