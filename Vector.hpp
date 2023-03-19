@@ -17,4 +17,4 @@ void operator-=(Vector2f &lhs, const Vector2f &rhs);
 void operator*=(Vector2f &lhs, const float &rhs);
 bool operator==(const Vector2f &lhs, const Vector2f &rhs);
 bool operator!=(const Vector2f &lhs, const Vector2f &rhs);
-
+float operator*(const Vector2f& lhs, const Vector2f& rhs);

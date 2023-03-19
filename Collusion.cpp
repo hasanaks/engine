@@ -1,23 +1,7 @@
 #include "Collusion.hpp"
 
 
-struct AABB {
-	Vector2f min;
-	Vector2f max;
-};
 
-struct knife_edge {
-	AABB* box;
-	int b;
-	int mag;
-};
-
-struct debut {
-
-	AABB* b1;
-	AABB* b2;
-
-};
 
 void swap(knife_edge* xp, knife_edge* yp)
 {
@@ -60,12 +44,13 @@ bool isOverlapping(AABB* a, AABB* b) {
 }
 
 std::vector<debut> activeList;
+std::vector<CollisionPoint*> Collusions;
 
 void EdgeInit() {
 	for (int i = 0; i < boxes.size(); i++)
 	{
-		knife_edge begin = NULL;
-		knife_edge end = NULL;
+		knife_edge begin{};
+		knife_edge end {};
 		begin.box = boxes[i];
 		begin.b = 1;
 		begin.mag = begin.box->min.x;
@@ -93,7 +78,7 @@ void EdgeInit() {
 		{
 			if (lock->b == 0) { count++; }
 			else if (lock->b == 1) {
-				debut temp = NULL;
+				debut temp{};
 				temp.b1 = key->box;
 				temp.b2 = lock->box;
 				activeList.push_back(temp);
@@ -108,13 +93,22 @@ void EdgeInit() {
 }
 
 
-int isActive() {
+void isActive() {
 	for (int i = 0; i < activeList.size(); i++) {
 		AABB* b1 = activeList[0].b1;
 		AABB* b2 = activeList[0].b2;
 		if(isOverlapping(b1,b2))
 		{
-			narrowPhase(b1,b2);
+			Vector2f d1 = b1->min - b2->max;
+			Vector2f d2 = b2->min - b2->max;
+			float dis=0.0;
+			if (d1.x < 0 && d1.y < 0) { dis=pow(pow(d1.x,2)+pow(d1.y,2),0.5f); }
+			if (d2.x < 0 && d2.y < 0) { dis=pow((d2.x, 2) + pow(d2.y, 2), 0.5f); }
+			CollisionPoint* col{};
+			col->bx1 = b1;
+			col->bx2 = b2;
+			col->depth = dis;
+			Collusions.push_back(col);
 		}
 	}
 }

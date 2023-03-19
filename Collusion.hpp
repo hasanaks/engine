@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "Vector.hpp"
+#include <cmath>
 
 struct AABB {
 	Vector2f min;
@@ -22,6 +23,13 @@ struct debut {
 	AABB* b2;
 
 };
+
+struct CollisionPoint {
+	AABB* bx1;
+	AABB* bx2;
+	float depth;
+};
+
 
 void swap(knife_edge* xp, knife_edge* yp);
 
