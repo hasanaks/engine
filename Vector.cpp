@@ -1,5 +1,9 @@
 #include "Vector.hpp"
 
+Vector2f Vector2f::Interpolate(Vector2f a, Vector2f b, float alpha) {
+  return a * (1.f - alpha) + b * alpha;
+}
+
 Vector2f operator+(const Vector2f &lhs, const Vector2f &rhs) {
   return {lhs.x + rhs.x, lhs.y + rhs.y};
 }

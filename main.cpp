@@ -1,5 +1,6 @@
 #include <iostream>
 #include <raylib.h>
+#include <rlgl.h>
 
 #include "World.hpp"
 #include "Collusion.hpp"
@@ -14,10 +15,7 @@ int main() {
   camera.rotation={};
   camera.zoom = 1;
 
-  World world;
-  auto particle = std::make_shared<Particle>();
-  particle->mass = 100;
-  world.AddParticle(particle);
+  World world({0, 10.f});
 
   float accumulator = 0;
   float physicsTimeStep = 0.01f;
@@ -25,26 +23,42 @@ int main() {
   while (!WindowShouldClose()) {
     const float frameTime = GetFrameTime();
 
-    const float cameraSpeed = 500;
-    if (IsKeyDown(KEY_LEFT)) {
-      camera.target.x -= cameraSpeed * frameTime;
+    if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+      Vector2 delta = GetMouseDelta();
+      Vector2f deltaf = {delta.x, delta.y};
+      deltaf *= -1.0f / camera.zoom;
+
+      camera.target.x += deltaf.x;
+      camera.target.y += deltaf.y;
     }
 
-    if (IsKeyDown(KEY_RIGHT)) {
-      camera.target.x += cameraSpeed * frameTime;
+    float wheel = GetMouseWheelMove();
+    if (wheel != 0) {
+      camera.target = GetScreenToWorld2D(GetMousePosition(), camera);
+      camera.offset = GetMousePosition();
+
+      const float zoomIncrement = 0.125f;
+      camera.zoom += wheel * zoomIncrement * camera.zoom;
+      if (camera.zoom < zoomIncrement)
+        camera.zoom = zoomIncrement;
     }
 
-    if (IsKeyDown(KEY_UP)) {
-      camera.target.y -= cameraSpeed * frameTime;
-    }
+    if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
+      auto particle = std::make_shared<Particle>();
+      particle->mass = 1;
+      auto pos = GetScreenToWorld2D(GetMousePosition(), camera);
+      particle->position = Vector2f{pos.x, pos.y};
 
-    if (IsKeyDown(KEY_DOWN)) {
-      camera.target.y += cameraSpeed * frameTime;
+      world.AddParticle(particle);
     }
-
-    std::vector<Particle> lastState = world.CopyState();
 
     accumulator += frameTime;
+
+    std::vector<Particle> lastState;
+    if (accumulator < physicsTimeStep) {
+      lastState = world.CopyState();
+    }
+
     while (accumulator >= physicsTimeStep) {
       if (accumulator - physicsTimeStep < physicsTimeStep) {
         lastState = world.CopyState();
@@ -58,11 +72,10 @@ int main() {
 
     auto currentState = world.CopyState();
     std::vector<Vector2f> positions;
-    std::transform(currentState.cbegin(), currentState.cend(),
-                   lastState.cbegin(), std::back_inserter(positions),
+    std::transform(lastState.cbegin(), lastState.cend(),
+                   currentState.cbegin(), std::back_inserter(positions),
                    [&interpolation](const auto &p1, const auto &p2) {
-                     return p1.position * interpolation +
-                            p2.position * (1.f - interpolation);
+					 return Vector2f::Interpolate(p1.position, p2.position, interpolation);
                    });
 
     BeginDrawing();
@@ -70,9 +83,11 @@ int main() {
     ClearBackground(BLACK);
 
     BeginMode2D(camera);
+
     for (auto &position : positions) {
-      DrawRectangle(position.x, -position.y, 60, 60, WHITE);
+      DrawRectangle(position.x, position.y, 60, 60, WHITE);
     }
+
     EndMode2D();
 
     EndDrawing();
