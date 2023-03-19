@@ -2,8 +2,10 @@
 
 
 #include <vector>
-#include "Vector.hpp"
 #include <cmath>
+#include "Eigen/Dense"
+
+using Eigen::Vector2f;
 
 struct AABB {
 	Vector2f min;

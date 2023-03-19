@@ -28,8 +28,8 @@ int main() {
       Vector2f deltaf = {delta.x, delta.y};
       deltaf *= -1.0f / camera.zoom;
 
-      camera.target.x += deltaf.x;
-      camera.target.y += deltaf.y;
+      camera.target.x += deltaf.x();
+      camera.target.y += deltaf.y();
     }
 
     float wheel = GetMouseWheelMove();
@@ -75,7 +75,7 @@ int main() {
     std::transform(lastState.cbegin(), lastState.cend(),
                    currentState.cbegin(), std::back_inserter(positions),
                    [&interpolation](const auto &p1, const auto &p2) {
-					 return Vector2f::Interpolate(p1.position, p2.position, interpolation);
+					 return p1.position * (1 - interpolation) + p2.position * interpolation;
                    });
 
     BeginDrawing();
@@ -85,7 +85,7 @@ int main() {
     BeginMode2D(camera);
 
     for (auto &position : positions) {
-      DrawRectangle(position.x, position.y, 60, 60, WHITE);
+      DrawRectangle(position.x(), position.y(), 60, 60, WHITE);
     }
 
     EndMode2D();

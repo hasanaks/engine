@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Vector.hpp"
 #include <cmath>
 #include <vector>
 #include "Particle.hpp"
+
 class Constraint {
 public:
 	Constraint(Particle* A, Vector2f* pos, float dis);

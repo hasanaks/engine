@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Particle.hpp"
-#include "Vector.hpp"
 #include <algorithm>
 #include <memory>
 #include <vector>

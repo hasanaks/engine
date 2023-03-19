@@ -1,5 +1,7 @@
 #pragma once
-#include "Vector.hpp"
+#include "Eigen/Dense"
+
+using Eigen::Vector2f;
 
 struct Particle {
   Vector2f position;

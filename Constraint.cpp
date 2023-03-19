@@ -8,13 +8,13 @@
 		forcext = &(A->force);
 		Va = &(A->velocity);
 		P = (*positionA) - (*positionB);
-		distance = pow(P * P, 1 / 2);
+		distance = pow(P.dot(P), 0.5f);
 		d = dis;
 		C = distance - d;
 		m = A->mass;
 	}
 	void Constraint::C2() {
-		lambda = (-1*(*forcext) * (*positionA)-(m*(*Va)*(*Va)))/((*positionA)*(*positionA));
+	  lambda = (-forcext->dot(*positionA)-(m*Va->dot(*Va))/(positionA->dot(*positionA)));
 		forceC = (*positionA) * lambda;
 		ret->force += forceC;
 

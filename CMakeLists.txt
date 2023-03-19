@@ -15,10 +15,16 @@ FetchContent_Declare(
   GIT_TAG v2.4.9
   GIT_SHALLOW TRUE
 )
-FetchContent_MakeAvailable(raylib doctest)
+FetchContent_Declare(
+  eigen
+  GIT_REPOSITORY https://gitlab.com/libeigen/eigen
+  GIT_TAG 3.4.0
+  GIT_SHALLOW TRUE
+)
+FetchContent_MakeAvailable(raylib doctest eigen)
 
-add_library(engine Vector.cpp World.cpp Collision.cpp Constraint.cpp)
-target_link_libraries(engine)
+add_library(engine World.cpp Collision.cpp Constraint.cpp)
+target_link_libraries(engine eigen)
 
 add_executable(engine-exec main.cpp)
 target_link_libraries(engine-exec engine raylib)
