@@ -1,4 +1,4 @@
-#include "constraint.hpp"
+#include "Constraint.hpp"
 
 
 	Constraint::Constraint(Particle* A,Vector2f* pos,float dis) {

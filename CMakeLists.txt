@@ -17,7 +17,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(raylib doctest)
 
-add_library(engine Vector.cpp World.cpp Collusion.cpp constraint.cpp)
+add_library(engine Vector.cpp World.cpp Collision.cpp Constraint.cpp)
 target_link_libraries(engine)
 
 add_executable(engine-exec main.cpp)
