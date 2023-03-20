@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Particle.hpp"
+#include "Collision.hpp"
+#include "Constraint.hpp"
 #include <algorithm>
 #include <memory>
 #include <vector>

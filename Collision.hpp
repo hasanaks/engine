@@ -4,6 +4,7 @@
 #include <vector>
 #include <cmath>
 #include "Eigen/Dense"
+#include "Particle.hpp"
 
 using Eigen::Vector2f;
 

@@ -1,7 +1,11 @@
 #include "Collision.hpp"
 
 
-
+/*std::vector<AABB*> Binit(std::vector<Particle> a) {
+	for (int i=0;i<a.size();i++){
+	
+	}
+}*/
 
 void swap(knife_edge* xp, knife_edge* yp)
 {
@@ -44,7 +48,7 @@ bool isOverlapping(AABB* a, AABB* b) {
 }
 
 std::vector<debut> activeList;
-std::vector<CollisionPoint*> Collusions;
+//std::vector<CollisionPoint*> Collusions;
 
 void EdgeInit() {
 	for (int i = 0; i < boxes.size(); i++)
@@ -93,13 +97,13 @@ void EdgeInit() {
 }
 
 
-void isActive() {
+bool isActive() {
 	for (int i = 0; i < activeList.size(); i++) {
-		AABB* b1 = activeList[0].b1;
-		AABB* b2 = activeList[0].b2;
+		AABB* b1 = activeList[i].b1;
+		AABB* b2 = activeList[i].b2;
 		if(isOverlapping(b1,b2))
 		{
-			Vector2f d1 = b1->min - b2->max;
+			/*Vector2f d1 = b1->min - b2->max;
 			Vector2f d2 = b2->min - b2->max;
 			float dis=0.0;
 			if (d1.x() < 0 && d1.y() < 0) { dis=pow(pow(d1.x(),2)+pow(d1.y(),2),0.5f); }
@@ -108,7 +112,8 @@ void isActive() {
 			col->bx1 = b1;
 			col->bx2 = b2;
 			col->depth = dis;
-			Collusions.push_back(col);
+			Collusions.push_back(col);*/
+			return true;
 		}
 	}
 }

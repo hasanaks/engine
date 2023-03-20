@@ -44,10 +44,11 @@ int main() {
     }
 
     if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
-      auto particle = std::make_shared<Particle>();
+      std::shared_ptr<Particle> particle = std::make_shared<Particle>();
       particle->mass = 1;
       auto pos = GetScreenToWorld2D(GetMousePosition(), camera);
       particle->position = Vector2f{pos.x, pos.y};
+     
 
       world.AddParticle(particle);
     }
