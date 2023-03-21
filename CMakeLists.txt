@@ -5,8 +5,14 @@ project(engine)
 include(FetchContent)
 FetchContent_Declare(
   raylib
-  GIT_REPOSITORY https://github.com/raysan5/raylib.git
+  GIT_REPOSITORY https://github.com/raysan5/raylib
   GIT_TAG 4.2.0
+  GIT_SHALLOW TRUE
+)
+FetchContent_Declare(
+  raygui
+  GIT_REPOSITORY https://github.com/raysan5/raygui
+  GIT_TAG 3.2
   GIT_SHALLOW TRUE
 )
 FetchContent_Declare(
@@ -21,11 +27,11 @@ FetchContent_Declare(
   GIT_TAG 3.4.0
   GIT_SHALLOW TRUE
 )
-FetchContent_MakeAvailable(raylib doctest)
+FetchContent_MakeAvailable(raylib doctest raygui)
 FetchContent_Populate(eigen)
-include_directories(${eigen_SOURCE_DIR})
 
 add_library(engine World.cpp Collision.cpp Constraint.cpp)
+target_include_directories(engine PUBLIC ${eigen_SOURCE_DIR} ${raygui_SOURCE_DIR}/src)
 
 add_executable(engine-exec main.cpp)
 target_link_libraries(engine-exec engine raylib)
