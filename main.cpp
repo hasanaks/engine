@@ -10,9 +10,6 @@ int main() {
   InitWindow(1200, 800, "Engine");
 
   Camera2D camera{};
-  camera.offset={GetScreenWidth() / 2.f, GetScreenHeight() / 2.f};
-  camera.target={};
-  camera.rotation={};
   camera.zoom = 1;
 
   World world({0, 10.f});
