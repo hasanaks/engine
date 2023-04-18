@@ -14,7 +14,7 @@ public:
   void AddParticle(std::shared_ptr<Particle> particle);
   void RemoveParticle(std::shared_ptr<Particle> particle);
   std::vector<Particle> CopyState();
-
+  void BuildBox(std::shared_ptr<Particle> pickle);
   Vector2f gravity{0};
 
 private:

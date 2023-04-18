@@ -23,6 +23,11 @@ void World::RemoveParticle(std::shared_ptr<Particle> particle) {
                   particles.end());
 }
 
+void World::BuildBox(std::shared_ptr<Particle> pickle) {
+
+
+}
+
 std::vector<Particle> World::CopyState() {
   std::vector<Particle> copied;
 

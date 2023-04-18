@@ -45,6 +45,7 @@ int main() {
       particle->mass = 1;
       auto pos = GetScreenToWorld2D(GetMousePosition(), camera);
       particle->position = Vector2f{pos.x, pos.y};
+      particle->transform = Vector2f(60.0f, 60.0f);
      
 
       world.AddParticle(particle);
@@ -69,11 +70,13 @@ int main() {
     const auto interpolation = accumulator / physicsTimeStep;
 
     auto currentState = world.CopyState();
-    std::vector<Vector2f> positions;
+    std::vector<Particle> positions;
     std::transform(lastState.cbegin(), lastState.cend(),
                    currentState.cbegin(), std::back_inserter(positions),
                    [&interpolation](const auto &p1, const auto &p2) {
-					 return p1.position * (1 - interpolation) + p2.position * interpolation;
+                    Particle a = p2;
+                    a.position=p1.position * (1 - interpolation) + p2.position * interpolation;
+                    return a;
                    });
 
     BeginDrawing();
@@ -82,8 +85,8 @@ int main() {
 
     BeginMode2D(camera);
 
-    for (auto &position : positions) {
-      DrawRectangle(position.x(), position.y(), 60, 60, WHITE);
+    for (auto &p : positions) {
+      DrawRectangle(p.position.x(), p.position.y(), p.transform.x(), p.transform.y(), WHITE);
     }
 
     EndMode2D();

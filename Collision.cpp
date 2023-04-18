@@ -1,12 +1,6 @@
 #include "Collision.hpp"
 
 
-/*std::vector<AABB*> Binit(std::vector<Particle> a) {
-	for (int i=0;i<a.size();i++){
-	
-	}
-}*/
-
 void swap(knife_edge* xp, knife_edge* yp)
 {
 	knife_edge temp = *xp;
@@ -36,8 +30,9 @@ void selectionSort(std::vector<knife_edge>arr, int n)
 	}
 }
 
-std::vector<AABB*> boxes;
-std::vector<knife_edge> elp;
+std::vector<debut> activeList;
+
+
 bool isOverlapping(AABB* a, AABB* b) {
 	Vector2f d1 = a->min - b->max;
 	Vector2f d2 = b->min - a->max;
@@ -47,10 +42,11 @@ bool isOverlapping(AABB* a, AABB* b) {
 	return true;
 }
 
-std::vector<debut> activeList;
+
 //std::vector<CollisionPoint*> Collusions;
 
-void EdgeInit() {
+std::vector<knife_edge> EdgeInit(std::vector<AABB*>boxes) {
+	std::vector<knife_edge> elp;
 	for (int i = 0; i < boxes.size(); i++)
 	{
 		knife_edge begin{};
@@ -65,8 +61,9 @@ void EdgeInit() {
 		elp.push_back(end);
 	}
 	selectionSort(elp, elp.size());
+	return elp;
 }
-	void relayer(){
+	void relayer(std::vector<knife_edge>elp){
 	int id = 0;
 	while (id<elp.size()-1)
 	{
@@ -118,8 +115,3 @@ bool isActive() {
 	}
 }
 
-int narrowPhase(AABB* b1, AABB* b2) {
-
-	//will be done
-	return 0;
-}
