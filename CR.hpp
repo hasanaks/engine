@@ -8,8 +8,8 @@
 class ImpulseSolver {
 
 public:
-	ImpulseSolver::ImpulseSolver(std::shared_ptr<Particle> P1, std::shared_ptr<Particle> P2);
-	Vector2f ImpulseSolver::normalFinder();
+	ImpulseSolver(std::shared_ptr<Particle> P1, std::shared_ptr<Particle> P2);
+	Vector2f normalFinder();
 	void ImpulseSolver::Imp();
 private:
 	std::shared_ptr<Particle> A;
