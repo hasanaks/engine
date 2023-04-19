@@ -52,12 +52,12 @@ std::vector<knife_edge> EdgeInit(std::vector<AABB>boxes) {
 	{
 		knife_edge begin{};
 		knife_edge end {};
-		begin.box = &boxes[i];
+		begin.box = boxes[i];
 		begin.b = 1;
-		begin.mag = begin.box->min.x();
-		end.box = &boxes[i];
+		begin.mag = begin.box.min.x();
+		end.box = boxes[i];
 		end.b = 0;
-		end.mag = begin.box->max.x();
+		end.mag = begin.box.max.x();
 		elp.push_back(begin);
 		elp.push_back(end);
 	}
@@ -77,15 +77,15 @@ std::vector<debut> relayer(std::vector<knife_edge>elp){ //inp function
 			continue;
 		}
 		int count = id+1;
-		knife_edge* key=&elp[id];
-		knife_edge* lock=&elp[count];
-		while (key->box!=lock->box)
+		knife_edge key=elp[id];
+		knife_edge lock=elp[count];
+		while (key.box.id!=lock.box.id)
 		{
-			if (lock->b == 0) { count++; }
-			else if (lock->b == 1) {
+			if (lock.b == 0) { count++; }
+			else if (lock.b == 1) {
 				debut temp{};
-				temp.b1 = key->box;
-				temp.b2 = lock->box;
+				temp.b1 = key.box;
+				temp.b2 = lock.box;
 				activeList.push_back(temp);
 				count++;
 
@@ -100,9 +100,9 @@ std::vector<debut> relayer(std::vector<knife_edge>elp){ //inp function
 
 void isActive(std::vector<debut> activeList) {
 	for (int i = 0; i < activeList.size(); i++) {
-		AABB* b1 = activeList[i].b1;
-		AABB* b2 = activeList[i].b2;
-		if(!isOverlapping(b1,b2))
+		AABB b1 = activeList[i].b1;
+		AABB b2 = activeList[i].b2;
+		if(!isOverlapping(&b1,&b2))
 		{
 			activeList.erase(activeList.begin()+(i-1));
 			i--;

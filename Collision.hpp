@@ -21,13 +21,13 @@ struct AABB {
 
 struct debut {
 
-	AABB* b1;
-	AABB* b2;
+	AABB b1;
+	AABB b2;
 
 };
 
 struct knife_edge {
-	AABB* box;
+	AABB box;
 	int b;
 	int mag;
 };
