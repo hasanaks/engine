@@ -36,18 +36,18 @@ void World::Echoes(){
 
     setBoxList();
     for(int i = 0; i<activeList.size();i++){
-    
+        
     }
 
 }
 
 AABB* World::BuildBox(std::shared_ptr<Particle> pickle) {
 
-    AABB* box{};
-    box->id = pickle;
-    box->min = pickle->position - Vector2f{ 0,pickle->transform.y()};
-    box->max = pickle->position + Vector2f{ pickle->transform.x(),0 };
-    return box;
+    AABB box{};
+    box.id = pickle;
+    box.min = pickle->position - Vector2f{ 0,pickle->transform.y()};
+    box.max = pickle->position + Vector2f{ pickle->transform.x(),0 };
+    return &box;
 }
 
 std::vector<Particle> World::CopyState() {
