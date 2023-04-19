@@ -81,14 +81,14 @@ std::vector<debut> relayer(std::vector<knife_edge>elp){ //inp function
 		knife_edge lock=elp[count];
 		while (key.box.id!=lock.box.id)
 		{
-			if (lock.b == 0) { count++; }
+			if (lock.b == 0) { count++; lock = elp[count];}
 			else if (lock.b == 1) {
 				debut temp{};
 				temp.b1 = key.box;
 				temp.b2 = lock.box;
 				activeList.push_back(temp);
 				count++;
-
+				lock = elp[count];
 			}
 		}
 
