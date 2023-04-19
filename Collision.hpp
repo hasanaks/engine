@@ -13,6 +13,7 @@ using Eigen::Vector2f;
 
 
 struct AABB {
+	std::shared_ptr<Particle> id;
 	Vector2f min;
 	Vector2f max;
 };
