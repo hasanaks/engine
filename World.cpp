@@ -24,7 +24,7 @@ void World::RemoveParticle(std::shared_ptr<Particle> particle) {
 }
 
 void World::setBoxList(){
-    std::vector<AABB*> l1;
+    std::vector<AABB> l1;
     for (auto& particle : particles) { //shame on a bro. fr
         l1.push_back(BuildBox(particle));
     }
@@ -41,13 +41,13 @@ void World::Echoes(){
 
 }
 
-AABB* World::BuildBox(std::shared_ptr<Particle> pickle) {
+AABB World::BuildBox(std::shared_ptr<Particle> pickle) {
 
     AABB box{};
     box.id = pickle;
     box.min = pickle->position - Vector2f{ 0,pickle->transform.y()};
     box.max = pickle->position + Vector2f{ pickle->transform.x(),0 };
-    return &box;
+    return box;
 }
 
 std::vector<Particle> World::CopyState() {

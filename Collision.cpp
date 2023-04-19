@@ -46,16 +46,16 @@ bool isOverlapping(AABB* a, AABB* b)   //helper funtion
 
 //std::vector<CollisionPoint*> Collusions;
 
-std::vector<knife_edge> EdgeInit(std::vector<AABB*>boxes) {
+std::vector<knife_edge> EdgeInit(std::vector<AABB>boxes) {
 	std::vector<knife_edge> elp;
 	for (int i = 0; i < boxes.size(); i++)
 	{
 		knife_edge begin{};
 		knife_edge end {};
-		begin.box = boxes[i];
+		begin.box = &boxes[i];
 		begin.b = 1;
 		begin.mag = begin.box->min.x();
-		end.box = boxes[i];
+		end.box = &boxes[i];
 		end.b = 0;
 		end.mag = begin.box->max.x();
 		elp.push_back(begin);
