@@ -45,6 +45,6 @@ void selectionSort(std::vector<knife_edge>arr, int n);
 
 bool isOverlapping(AABB* a, AABB* b);
 
-void EdgeInit();
-void relayer();
+std::vector<knife_edge> EdgeInit(std::vector<AABB*>boxes);
+void relayer(std::vector<knife_edge>elp);
 
