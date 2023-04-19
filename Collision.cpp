@@ -1,5 +1,4 @@
 #include "Collision.hpp"
-#include <iostream>
 
 
 void swap(knife_edge* xp, knife_edge* yp)
