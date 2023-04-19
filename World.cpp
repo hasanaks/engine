@@ -28,7 +28,17 @@ void World::setBoxList(){
     for (auto& particle : particles) { //shame on a bro. fr
         l1.push_back(BuildBox(particle));
     }
-    relayer(EdgeInit(l1));
+    activeList=relayer(EdgeInit(l1));
+    isActive(activeList);
+}
+
+void World::Echoes(){
+
+    setBoxList();
+    for(int i = 0; i<activeList.size();i++){
+    
+    }
+
 }
 
 AABB* World::BuildBox(std::shared_ptr<Particle> pickle) {

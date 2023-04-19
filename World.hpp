@@ -18,8 +18,9 @@ public:
   AABB* BuildBox(std::shared_ptr<Particle> pickle);
   void setBoxList();
   Vector2f gravity{0};
-
+  void Echoes();
 private:
   std::vector<std::shared_ptr<Particle>> particles;
- 
+  std::vector<debut> activeList;
+  std::vector<ImpulseSolver> constraints;
 };
