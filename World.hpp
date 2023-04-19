@@ -19,6 +19,7 @@ public:
   void setBoxList();
   Vector2f gravity{0};
   void Echoes();
+  void gebouw();
 private:
   std::vector<std::shared_ptr<Particle>> particles;
   std::vector<debut> activeList;

@@ -34,11 +34,7 @@ struct knife_edge {
 
 
 
-struct CollisionPoint {
-	AABB* bx1;
-	AABB* bx2;
-	float depth;
-};
+
 
 
 void swap(knife_edge* xp, knife_edge* yp);

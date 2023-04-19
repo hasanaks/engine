@@ -3,6 +3,8 @@
 World::World(Vector2f gravity) : gravity(gravity) {}
 
 void World::Step(float dt) {
+    Echoes();
+    gebouw();
   for (auto &particle : particles) {
     particle->force += particle->mass * gravity;
     
@@ -36,7 +38,16 @@ void World::Echoes(){
 
     setBoxList();
     for(int i = 0; i<activeList.size();i++){
-        
+        ImpulseSolver c{ activeList[i].b1.id,activeList[i].b2.id };
+        constraints.push_back(c);
+    }
+
+}
+
+void World::gebouw(){
+
+    for (auto& constraint : constraints) {
+        constraint.Imp();
     }
 
 }
