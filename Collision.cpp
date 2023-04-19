@@ -69,6 +69,7 @@ std::vector<knife_edge> EdgeInit(std::vector<AABB>boxes) {
 std::vector<debut> relayer(std::vector<knife_edge>elp){ //inp function
 	std::vector<debut> activeList;
 	int id = 0;
+	if (elp.size() < 0) { return activeList; }
 	while (id<elp.size()-1)
 	{
 		if(elp[id].b!=1)
