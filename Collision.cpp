@@ -68,7 +68,7 @@ std::vector<debut> relayer(std::vector<knife_edge>elp){ //inp function
 }
 
 
-void isActive(std::vector<debut> activeList) {
+void isActive(std::vector<debut>& activeList) {
 	for (int i = 0; i < activeList.size(); i++) {
 		AABB b1 = activeList[i].b1;
 		AABB b2 = activeList[i].b2;
