@@ -74,7 +74,7 @@ void isActive(std::vector<debut> activeList) {
 		AABB b2 = activeList[i].b2;
 		if(!isOverlapping(&b1,&b2))
 		{
-			activeList.erase(activeList.begin()+(i-1));
+			activeList.erase(activeList.begin() + i);
 			i--;
 		}
 	}
