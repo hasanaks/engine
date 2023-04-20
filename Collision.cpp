@@ -1,38 +1,5 @@
 #include "Collision.hpp"
 
-
-void swap(knife_edge* xp, knife_edge* yp)
-{
-	knife_edge temp = *xp;
-	*xp = *yp;
-	*yp = temp;
-}
-
-void selectionSort(std::vector<knife_edge>arr, int n)
-{
-	int i, j, min_idx;
-	// One by one move boundary of 
-	// unsorted subarray 
-	for (i = 0; i < n - 1; i++)
-	{
-		// Find the minimum element in 
-		// unsorted array 
-		min_idx = i;
-		for (j = i + 1; j < n; j++)
-		{
-			if (arr[j].mag < arr[min_idx].mag)
-				min_idx = j;
-		}
-		// Swap the found minimum element 
-		// with the first element 
-		if (min_idx != i)
-			swap(&arr[min_idx], &arr[i]);
-	}
-}
-
-
-
-
 bool isOverlapping(AABB* a, AABB* b)   //helper funtion
 {
 	Vector2f d1 = a->min - b->max;
@@ -42,9 +9,6 @@ bool isOverlapping(AABB* a, AABB* b)   //helper funtion
 	if (d2.x() > 0 || d2.y() > 0) { return false; }
 	return true;
 } 
-
-
-//std::vector<CollisionPoint*> Collusions;
 
 std::vector<knife_edge> EdgeInit(std::vector<AABB>boxes) {
 	std::vector<knife_edge> elp;
@@ -61,10 +25,13 @@ std::vector<knife_edge> EdgeInit(std::vector<AABB>boxes) {
 		elp.push_back(begin);
 		elp.push_back(end);
 	}
-	selectionSort(elp, elp.size());
+
+	std::sort(elp.begin(), elp.end(), [](knife_edge a, knife_edge b) {
+	  return a.mag < b.mag;
+	});
+
 	return elp;
 }//input function
-
 
 std::vector<debut> relayer(std::vector<knife_edge>elp){ //inp function
 	std::vector<debut> activeList;
