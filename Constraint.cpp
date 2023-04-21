@@ -1,6 +1,6 @@
 #include "Constraint.hpp"
 
-Constraint::Constraint(std::shared_ptr<Particle> particle, Vector2f position)
+Constraint::Constraint(std::shared_ptr<PhysicsObject> particle, Vector2f position)
     : particle(particle), position(position) {}
 
 void Constraint::C2() {

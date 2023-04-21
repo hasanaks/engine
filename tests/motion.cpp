@@ -5,7 +5,7 @@
 TEST_CASE("particle motion physics") {
   World world({0, -10.f});
 
-  auto particle = std::make_shared<Particle>();
+  auto particle = std::make_shared<PhysicsObject>();
   particle->mass = 10;
 
   world.AddParticle(particle);

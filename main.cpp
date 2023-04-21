@@ -42,7 +42,7 @@ int main() {
     }
 
     if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
-      std::shared_ptr<Particle> particle = std::make_shared<Particle>();
+      std::shared_ptr<PhysicsObject> particle = std::make_shared<PhysicsObject>();
       particle->mass = 1;
       auto pos = GetScreenToWorld2D(GetMousePosition(), camera);
       particle->position = Vector2f{pos.x, pos.y};
@@ -53,7 +53,7 @@ int main() {
 
     accumulator += frameTime;
 
-    std::vector<Particle> lastState;
+    std::vector<PhysicsObject> lastState;
     if (accumulator < physicsTimeStep) {
       lastState = world.CopyState();
     }
@@ -70,11 +70,11 @@ int main() {
     const auto interpolation = accumulator / physicsTimeStep;
 
     auto currentState = world.CopyState();
-    std::vector<Particle> positions;
+    std::vector<PhysicsObject> positions;
     std::transform(lastState.cbegin(), lastState.cend(), currentState.cbegin(),
                    std::back_inserter(positions),
                    [&interpolation](const auto &p1, const auto &p2) {
-                     Particle a = p2;
+                     PhysicsObject a = p2;
                      a.position = p1.position * (1 - interpolation) +
                                   p2.position * interpolation;
                      return a;

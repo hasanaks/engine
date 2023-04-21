@@ -17,14 +17,14 @@ void World::Step(float dt) {
   }
 }
 
-void World::AddParticle(std::shared_ptr<Particle> particle) {
+void World::AddParticle(std::shared_ptr<PhysicsObject> particle) {
   if (std::find(particles.begin(), particles.end(), particle) ==
       std::end(particles)) {
     particles.push_back(particle);
   }
 }
 
-void World::RemoveParticle(std::shared_ptr<Particle> particle) {
+void World::RemoveParticle(std::shared_ptr<PhysicsObject> particle) {
   particles.erase(std::remove(particles.begin(), particles.end(), particle),
                   particles.end());
 }
@@ -53,7 +53,7 @@ void World::gebouw() {
   }
 }
 
-AABB World::BuildBox(std::shared_ptr<Particle> pickle) {
+AABB World::BuildBox(std::shared_ptr<PhysicsObject> pickle) {
   AABB box{};
   box.id = pickle;
   box.min = pickle->position - Vector2f{0, pickle->transform.y()};
@@ -61,8 +61,8 @@ AABB World::BuildBox(std::shared_ptr<Particle> pickle) {
   return box;
 }
 
-std::vector<Particle> World::CopyState() {
-  std::vector<Particle> copied(particles.size());
+std::vector<PhysicsObject> World::CopyState() {
+  std::vector<PhysicsObject> copied(particles.size());
   std::transform(particles.cbegin(), particles.cend(), copied.begin(),
                  [](const auto &particle) { return *particle; });
   return copied;

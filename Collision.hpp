@@ -9,7 +9,7 @@
 using Eigen::Vector2f;
 
 struct AABB {
-  std::shared_ptr<Particle> id;
+  std::shared_ptr<PhysicsObject> id;
   Vector2f min;
   Vector2f max;
 };

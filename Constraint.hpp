@@ -7,10 +7,10 @@
 
 class Constraint {
 public:
-  Constraint(std::shared_ptr<Particle> particle, Vector2f position);
+  Constraint(std::shared_ptr<PhysicsObject> particle, Vector2f position);
   void C2();
 
 private:
-  std::shared_ptr<Particle> particle;
+  std::shared_ptr<PhysicsObject> particle;
   Vector2f position;
 };
