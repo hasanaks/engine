@@ -1,4 +1,4 @@
-#include "CR.hpp"
+#include "ImpulseSolver.hpp"
 
 ImpulseSolver::ImpulseSolver(std::shared_ptr<Particle> P1,
                              std::shared_ptr<Particle> P2) {

@@ -30,7 +30,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(raylib doctest raygui)
 FetchContent_Populate(eigen)
 
-add_library(engine World.cpp Collision.cpp Constraint.cpp CR.cpp)
+add_library(engine World.cpp Collision.cpp Constraint.cpp ImpulseSolver.cpp)
 target_include_directories(engine PUBLIC ${eigen_SOURCE_DIR} ${raygui_SOURCE_DIR}/src)
 
 add_executable(engine-exec main.cpp)
