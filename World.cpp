@@ -36,8 +36,10 @@ void World::setBoxList() {
 }
 
 void World::Echoes() {
-
   setBoxList();
+
+  constraints = {};
+
   for (int i = 0; i < activeList.size(); i++) {
     ImpulseSolver c{activeList[i].b1.id, activeList[i].b2.id};
     constraints.push_back(c);
