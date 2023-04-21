@@ -18,7 +18,9 @@ void World::Step(float dt) {
 }
 
 void World::AddParticle(std::shared_ptr<Particle> particle) {
-  particles.push_back(particle);
+  if (std::find(particles.begin(), particles.end(), particle) == std::end(particles)) {
+	particles.push_back(particle);
+  }
 }
 
 void World::RemoveParticle(std::shared_ptr<Particle> particle) {
