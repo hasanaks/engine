@@ -9,7 +9,6 @@ class ImpulseSolver {
 
 public:
   ImpulseSolver(std::shared_ptr<Particle> P1, std::shared_ptr<Particle> P2);
-  Vector2f normalFinder();
   void Imp();
 
 private:
