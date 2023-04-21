@@ -3,7 +3,7 @@
 #include "ImpulseSolver.hpp"
 #include "Collision.hpp"
 #include "Constraint.hpp"
-#include "Particle.hpp"
+#include "PhysicsObject.hpp"
 #include <algorithm>
 #include <memory>
 #include <vector>

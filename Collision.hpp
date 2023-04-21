@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Eigen/Dense"
-#include "Particle.hpp"
+#include "PhysicsObject.hpp"
 #include <cmath>
 #include <memory>
 #include <vector>

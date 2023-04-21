@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Particle.hpp"
+#include "PhysicsObject.hpp"
 #include <cmath>
 #include <memory>
 #include <vector>
