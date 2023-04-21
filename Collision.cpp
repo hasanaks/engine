@@ -30,8 +30,9 @@ std::vector<knife_edge> EdgeInit(std::vector<AABB> boxes) {
     elp.push_back(end);
   }
 
-  std::sort(elp.begin(), elp.end(),
-            [](const knife_edge& a, const knife_edge& b) { return a.mag < b.mag; });
+  std::sort(
+      elp.begin(), elp.end(),
+      [](const knife_edge &a, const knife_edge &b) { return a.mag < b.mag; });
 
   return elp;
 } // input function

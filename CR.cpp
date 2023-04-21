@@ -14,8 +14,8 @@ Vector2f ImpulseSolver::normalFinder() {
 void ImpulseSolver::Imp() {
   Vector2f normal = normalFinder();
   /*Eigen::Vector4f Jacobian;
-  Jacobian[0] = normal[0];			Will be useful when calculations of
-  impulse is written only as matrix multiplication Jacobian[1] = normal[1];
+  Jacobian[0] = normal[0];			Will be useful when calculations
+  of impulse is written only as matrix multiplication Jacobian[1] = normal[1];
   Jacobian[2] = -normal[0];
   Jacobian[3] = -normal[1];*/
 
