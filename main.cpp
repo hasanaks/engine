@@ -42,13 +42,14 @@ int main() {
     }
 
     if (IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
-      std::shared_ptr<PhysicsObject> particle = std::make_shared<PhysicsObject>();
-      particle->mass = 1;
-      auto pos = GetScreenToWorld2D(GetMousePosition(), camera);
-      particle->position = Vector2f{pos.x, pos.y};
-      particle->transform = Vector2f(60.0f, 60.0f);
+      auto physicsObject = std::make_shared<PhysicsObject>();
+      physicsObject->mass = 1;
 
-      world.AddParticle(particle);
+      auto pos = GetScreenToWorld2D(GetMousePosition(), camera);
+      physicsObject->position = Vector2f{pos.x, pos.y};
+      physicsObject->transform = Vector2f(60.0f, 60.0f);
+
+      world.AddParticle(physicsObject);
     }
 
     accumulator += frameTime;

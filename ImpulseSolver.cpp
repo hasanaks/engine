@@ -1,8 +1,8 @@
 #include "ImpulseSolver.hpp"
 
-ImpulseSolver::ImpulseSolver(std::shared_ptr<PhysicsObject> particle1,
-                             std::shared_ptr<PhysicsObject> particle2)
-    : particle1(particle1), particle2(particle2) {}
+ImpulseSolver::ImpulseSolver(std::shared_ptr<PhysicsObject> physicsObject1,
+                             std::shared_ptr<PhysicsObject> physicsObject2)
+    : physicsObject1(physicsObject1), physicsObject2(physicsObject2) {}
 
 void ImpulseSolver::Imp() {
   /*Eigen::Vector4f Jacobian;
@@ -11,18 +11,18 @@ void ImpulseSolver::Imp() {
   Jacobian[2] = -normal[0];
   Jacobian[3] = -normal[1];*/
 
-  Vector2f relativePosition = particle2->position - particle1->position;
+  Vector2f relativePosition = physicsObject2->position - physicsObject1->position;
 
   Vector2f normal = relativePosition.normalized();
   float Vd = relativePosition.dot(normal);
 
-  float invm = (1 / particle1->mass) + (1 / particle2->mass);
+  float invm = (1 / physicsObject1->mass) + (1 / physicsObject2->mass);
 
   float lambda = -Vd / invm;
 
   Vector2f aImp = normal * lambda;
   Vector2f bImp = -normal * lambda;
 
-  particle1->velocity += aImp / particle1->mass;
-  particle2->velocity += bImp / particle2->mass;
+  physicsObject1->velocity += aImp / physicsObject1->mass;
+  physicsObject2->velocity += bImp / physicsObject2->mass;
 }

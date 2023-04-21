@@ -5,33 +5,33 @@ World::World(Vector2f gravity) : gravity(gravity) {}
 void World::Step(float dt) {
   Echoes();
   gebouw();
-  for (auto &particle : particles) {
-    particle->force += particle->mass * gravity;
+  for (auto &physicsObject : physicsObjects) {
+    physicsObject->force += physicsObject->mass * gravity;
 
-    auto acceleration = particle->force / particle->mass;
-    particle->position +=
-        particle->velocity * dt + 0.5f * acceleration * dt * dt;
-    particle->velocity += acceleration * dt;
+    auto acceleration = physicsObject->force / physicsObject->mass;
+    physicsObject->position +=
+        physicsObject->velocity * dt + 0.5f * acceleration * dt * dt;
+    physicsObject->velocity += acceleration * dt;
 
-    particle->force = {0, 0};
+    physicsObject->force = {0, 0};
   }
 }
 
-void World::AddParticle(std::shared_ptr<PhysicsObject> particle) {
-  if (std::find(particles.begin(), particles.end(), particle) ==
-      std::end(particles)) {
-    particles.push_back(particle);
+void World::AddParticle(std::shared_ptr<PhysicsObject> physicsObject) {
+  if (std::find(physicsObjects.begin(), physicsObjects.end(), physicsObject) ==
+      std::end(physicsObjects)) {
+    physicsObjects.push_back(physicsObject);
   }
 }
 
-void World::RemoveParticle(std::shared_ptr<PhysicsObject> particle) {
-  particles.erase(std::remove(particles.begin(), particles.end(), particle),
-                  particles.end());
+void World::RemoveParticle(std::shared_ptr<PhysicsObject> physicsObject) {
+  physicsObjects.erase(std::remove(physicsObjects.begin(), physicsObjects.end(), physicsObject),
+                  physicsObjects.end());
 }
 
 void World::setBoxList() {
-  std::vector<AABB> l1(particles.size());
-  std::transform(particles.cbegin(), particles.cend(), l1.begin(), BuildBox);
+  std::vector<AABB> l1(physicsObjects.size());
+  std::transform(physicsObjects.cbegin(), physicsObjects.cend(), l1.begin(), BuildBox);
   activeList = relayer(EdgeInit(l1));
   isActive(activeList);
 }
@@ -62,8 +62,8 @@ AABB World::BuildBox(std::shared_ptr<PhysicsObject> pickle) {
 }
 
 std::vector<PhysicsObject> World::CopyState() {
-  std::vector<PhysicsObject> copied(particles.size());
-  std::transform(particles.cbegin(), particles.cend(), copied.begin(),
-                 [](const auto &particle) { return *particle; });
+  std::vector<PhysicsObject> copied(physicsObjects.size());
+  std::transform(physicsObjects.cbegin(), physicsObjects.cend(), copied.begin(),
+                 [](const auto &physicsObject) { return *physicsObject; });
   return copied;
 }

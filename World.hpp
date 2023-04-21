@@ -12,8 +12,8 @@ class World {
 public:
   explicit World(Vector2f gravity);
   void Step(float dt);
-  void AddParticle(std::shared_ptr<PhysicsObject> particle);
-  void RemoveParticle(std::shared_ptr<PhysicsObject> particle);
+  void AddParticle(std::shared_ptr<PhysicsObject> physicsObject);
+  void RemoveParticle(std::shared_ptr<PhysicsObject> physicsObject);
   std::vector<PhysicsObject> CopyState();
   static AABB BuildBox(std::shared_ptr<PhysicsObject> pickle);
   void setBoxList();
@@ -22,7 +22,7 @@ public:
   void gebouw();
 
 private:
-  std::vector<std::shared_ptr<PhysicsObject>> particles;
+  std::vector<std::shared_ptr<PhysicsObject>> physicsObjects;
   std::vector<debut> activeList;
   std::vector<ImpulseSolver> constraints;
 };

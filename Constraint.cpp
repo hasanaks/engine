@@ -1,14 +1,14 @@
 #include "Constraint.hpp"
 
-Constraint::Constraint(std::shared_ptr<PhysicsObject> particle, Vector2f position)
-    : particle(particle), position(position) {}
+Constraint::Constraint(std::shared_ptr<PhysicsObject> physicsObject, Vector2f position)
+    : physicsObject(physicsObject), position(position) {}
 
 void Constraint::C2() {
-  auto relativePosition = particle->position - position;
+  auto relativePosition = physicsObject->position - position;
   auto lambda =
-      (-particle->force.dot(relativePosition) -
-       (particle->mass * particle->velocity.dot(particle->velocity))) /
+      (-physicsObject->force.dot(relativePosition) -
+       (physicsObject->mass * physicsObject->velocity.dot(physicsObject->velocity))) /
       relativePosition.dot(relativePosition);
 
-  particle->force += (relativePosition)*lambda;
+  physicsObject->force += (relativePosition)*lambda;
 }

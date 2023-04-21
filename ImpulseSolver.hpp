@@ -8,10 +8,10 @@
 class ImpulseSolver {
 
 public:
-  ImpulseSolver(std::shared_ptr<PhysicsObject> particle1, std::shared_ptr<PhysicsObject> particle2);
+  ImpulseSolver(std::shared_ptr<PhysicsObject> physicsObject1, std::shared_ptr<PhysicsObject> physicsObject2);
   void Imp();
 
 private:
-  std::shared_ptr<PhysicsObject> particle1;
-  std::shared_ptr<PhysicsObject> particle2;
+  std::shared_ptr<PhysicsObject> physicsObject1;
+  std::shared_ptr<PhysicsObject> physicsObject2;
 };
