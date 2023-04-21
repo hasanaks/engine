@@ -2,7 +2,8 @@
 #include <raylib.h>
 #include <rlgl.h>
 
-#include "Collision.hpp"
+#include "Eigen/Dense"
+
 #include "World.hpp"
 
 int main() {
