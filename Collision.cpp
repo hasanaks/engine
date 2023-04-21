@@ -63,6 +63,9 @@ std::vector<debut> relayer(std::vector<knife_edge> elp) { // inp function
       }
 
       count++;
+      if (count >= elp.size())
+        break;
+
       lock = elp[count];
     }
 
