@@ -30,10 +30,8 @@ void World::RemoveParticle(std::shared_ptr<Particle> particle) {
 }
 
 void World::setBoxList() {
-  std::vector<AABB> l1;
-  for (auto &particle : particles) { // shame on a bro. fr
-    l1.push_back(BuildBox(particle));
-  }
+  std::vector<AABB> l1(particles.size());
+  std::transform(particles.cbegin(), particles.cend(), l1.begin(), BuildBox);
   activeList = relayer(EdgeInit(l1));
   isActive(activeList);
 }
@@ -50,14 +48,12 @@ void World::Echoes() {
 }
 
 void World::gebouw() {
-
   for (auto &constraint : constraints) {
     constraint.Imp();
   }
 }
 
 AABB World::BuildBox(std::shared_ptr<Particle> pickle) {
-
   AABB box{};
   box.id = pickle;
   box.min = pickle->position - Vector2f{0, pickle->transform.y()};
@@ -66,11 +62,8 @@ AABB World::BuildBox(std::shared_ptr<Particle> pickle) {
 }
 
 std::vector<Particle> World::CopyState() {
-  std::vector<Particle> copied;
-
-  for (auto &particle : particles) {
-    copied.push_back(*particle);
-  }
-
+  std::vector<Particle> copied(particles.size());
+  std::transform(particles.cbegin(), particles.cend(), copied.begin(),
+                 [](const auto &particle) { return *particle; });
   return copied;
 }
