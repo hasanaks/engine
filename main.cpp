@@ -71,11 +71,12 @@ int main() {
     const auto interpolation = accumulator / physicsTimeStep;
 
     auto currentState = world.CopyState();
-    std::vector<PhysicsObject> positions;
-    std::transform(lastState.cbegin(), lastState.cend(), currentState.cbegin(),
-                   std::back_inserter(positions),
-                   [&interpolation](const auto &p1, const auto &p2) {
-                     PhysicsObject a = p2;
+    std::vector<PhysicsObject> positions(currentState.size());
+
+    std::transform(currentState.cbegin(), currentState.cend(), lastState.cbegin(),
+                   positions.begin(),
+                   [interpolation](const auto &p1, const auto &p2) {
+                     auto a = p2;
                      a.position = p1.position * (1 - interpolation) +
                                   p2.position * interpolation;
                      return a;
