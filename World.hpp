@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CR.hpp"
+#include "ImpulseSolver.hpp"
 #include "Collision.hpp"
 #include "Constraint.hpp"
 #include "Particle.hpp"
