@@ -1,45 +1,33 @@
 #pragma once
 
-
-#include <vector>
-#include <cmath>
 #include "Eigen/Dense"
 #include "Particle.hpp"
+#include <cmath>
+#include <memory>
+#include <vector>
 
 using Eigen::Vector2f;
 
 struct AABB {
-	Vector2f min;
-	Vector2f max;
-};
-
-
-struct knife_edge {
-	AABB* box;
-	int b;
-	int mag;
+  std::shared_ptr<Particle> id;
+  Vector2f min;
+  Vector2f max;
 };
 
 struct debut {
 
-	AABB* b1;
-	AABB* b2;
-
+  AABB b1;
+  AABB b2;
 };
 
-struct CollisionPoint {
-	AABB* bx1;
-	AABB* bx2;
-	float depth;
+struct knife_edge {
+  AABB box;
+  int b;
+  int mag;
 };
 
+bool isOverlapping(AABB *a, AABB *b);
+void isActive(std::vector<debut> &activeList);
 
-void swap(knife_edge* xp, knife_edge* yp);
-
-void selectionSort(std::vector<knife_edge>arr, int n);
-
-bool isOverlapping(AABB* a, AABB* b);
-
-void EdgeInit();
-void relayer();
-int narrowPhase(AABB* b1, AABB* b2);
+std::vector<knife_edge> EdgeInit(std::vector<AABB> boxes);
+std::vector<debut> relayer(std::vector<knife_edge> elp);
