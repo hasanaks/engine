@@ -92,6 +92,8 @@ int main() {
 
     EndMode2D();
 
+    DrawFPS(0, 0);
+
     EndDrawing();
   }
 
