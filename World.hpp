@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Particle.hpp"
+#include "CR.hpp"
 #include "Collision.hpp"
 #include "Constraint.hpp"
-#include "CR.hpp"
+#include "Particle.hpp"
 #include <algorithm>
 #include <memory>
 #include <vector>
@@ -20,6 +20,7 @@ public:
   Vector2f gravity{0};
   void Echoes();
   void gebouw();
+
 private:
   std::vector<std::shared_ptr<Particle>> particles;
   std::vector<debut> activeList;

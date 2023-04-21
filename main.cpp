@@ -2,8 +2,8 @@
 #include <raylib.h>
 #include <rlgl.h>
 
-#include "World.hpp"
 #include "Collision.hpp"
+#include "World.hpp"
 
 int main() {
   SetConfigFlags(FLAG_VSYNC_HINT);
@@ -46,7 +46,6 @@ int main() {
       auto pos = GetScreenToWorld2D(GetMousePosition(), camera);
       particle->position = Vector2f{pos.x, pos.y};
       particle->transform = Vector2f(60.0f, 60.0f);
-     
 
       world.AddParticle(particle);
     }
@@ -71,12 +70,13 @@ int main() {
 
     auto currentState = world.CopyState();
     std::vector<Particle> positions;
-    std::transform(lastState.cbegin(), lastState.cend(),
-                   currentState.cbegin(), std::back_inserter(positions),
+    std::transform(lastState.cbegin(), lastState.cend(), currentState.cbegin(),
+                   std::back_inserter(positions),
                    [&interpolation](const auto &p1, const auto &p2) {
-                    Particle a = p2;
-                    a.position=p1.position * (1 - interpolation) + p2.position * interpolation;
-                    return a;
+                     Particle a = p2;
+                     a.position = p1.position * (1 - interpolation) +
+                                  p2.position * interpolation;
+                     return a;
                    });
 
     BeginDrawing();
@@ -86,7 +86,8 @@ int main() {
     BeginMode2D(camera);
 
     for (auto &p : positions) {
-      DrawRectangle(p.position.x(), p.position.y(), p.transform.x(), p.transform.y(), WHITE);
+      DrawRectangle(p.position.x(), p.position.y(), p.transform.x(),
+                    p.transform.y(), WHITE);
     }
 
     EndMode2D();

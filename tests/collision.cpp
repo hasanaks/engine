@@ -1,5 +1,5 @@
-#include "doctest.h"
 #include "../Collision.hpp"
+#include "doctest.h"
 
 TEST_CASE("Overlap") {
   AABB box1{nullptr, {0, 100}, {100, 0}};
