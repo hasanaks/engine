@@ -20,17 +20,12 @@ void World::Step(float dt) {
 }
 
 void World::AddParticle(const std::shared_ptr<PhysicsObject> &physicsObject) {
-  if (std::find(physicsObjects.begin(), physicsObjects.end(), physicsObject) ==
-      std::end(physicsObjects)) {
-    physicsObjects.push_back(physicsObject);
-  }
+  physicsObjects.insert(physicsObject);
 }
 
 void World::RemoveParticle(
     const std::shared_ptr<PhysicsObject> &physicsObject) {
-  physicsObjects.erase(
-      std::remove(physicsObjects.begin(), physicsObjects.end(), physicsObject),
-      physicsObjects.end());
+  physicsObjects.erase(physicsObject);
 }
 
 std::vector<PhysicsObject> World::CopyState() {

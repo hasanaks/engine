@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <memory>
 #include <vector>
+#include <unordered_set>
 
 class World {
 public:
@@ -22,6 +23,6 @@ public:
 private:
   std::vector<debut> GetActiveAABB();
 
-  std::vector<std::shared_ptr<PhysicsObject>> physicsObjects;
+  std::unordered_set<std::shared_ptr<PhysicsObject>> physicsObjects;
   std::vector<ImpulseSolver> constraints;
 };
