@@ -1,7 +1,7 @@
 #include "ImpulseSolver.hpp"
 
-ImpulseSolver::ImpulseSolver(std::shared_ptr<PhysicsObject> physicsObject1,
-                             std::shared_ptr<PhysicsObject> physicsObject2)
+ImpulseSolver::ImpulseSolver(PhysicsObject *physicsObject1,
+                             PhysicsObject *physicsObject2)
     : physicsObject1(physicsObject1), physicsObject2(physicsObject2) {}
 
 void ImpulseSolver::Imp() {

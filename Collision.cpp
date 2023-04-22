@@ -1,5 +1,11 @@
 #include "Collision.hpp"
 
+AABB::AABB(PhysicsObject *physicsObject)
+    : id(physicsObject),
+      min(physicsObject->position - Vector2f{0, physicsObject->transform.y()}),
+      max(physicsObject->position + Vector2f{physicsObject->transform.x(), 0}) {
+}
+
 bool isOverlapping(const AABB &a, const AABB &b) // helper funtion
 {
   Vector2f d1 = a.min - b.max;

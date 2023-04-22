@@ -15,7 +15,6 @@ public:
   void AddParticle(const std::shared_ptr<PhysicsObject> &physicsObject);
   void RemoveParticle(const std::shared_ptr<PhysicsObject> &physicsObject);
   std::vector<PhysicsObject> CopyState();
-  static AABB BuildBox(std::shared_ptr<PhysicsObject> pickle);
   void setBoxList();
   Vector2f gravity{0};
   void Echoes();

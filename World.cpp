@@ -33,7 +33,8 @@ void World::RemoveParticle(
 
 void World::setBoxList() {
   std::vector<AABB> l1(physicsObjects.size());
-  std::transform(physicsObjects.cbegin(), physicsObjects.cend(), l1.begin(), BuildBox);
+  std::transform(physicsObjects.cbegin(), physicsObjects.cend(), l1.begin(),
+                 [](const auto &object) { return AABB(object.get()); });
   activeList = relayer(EdgeInit(l1));
   isActive(activeList);
 }
@@ -53,14 +54,6 @@ void World::gebouw() {
   for (auto &constraint : constraints) {
     constraint.Imp();
   }
-}
-
-AABB World::BuildBox(std::shared_ptr<PhysicsObject> pickle) {
-  AABB box{};
-  box.id = pickle;
-  box.min = pickle->position - Vector2f{0, pickle->transform.y()};
-  box.max = pickle->position + Vector2f{pickle->transform.x(), 0};
-  return box;
 }
 
 std::vector<PhysicsObject> World::CopyState() {

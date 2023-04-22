@@ -9,9 +9,12 @@
 using Eigen::Vector2f;
 
 struct AABB {
-  std::shared_ptr<PhysicsObject> id;
+  PhysicsObject *id;
   Vector2f min;
   Vector2f max;
+
+  AABB() = default;
+  explicit AABB(PhysicsObject *physicsObject);
 };
 
 struct debut {
