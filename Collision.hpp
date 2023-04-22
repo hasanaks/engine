@@ -26,7 +26,7 @@ struct knife_edge {
   int mag;
 };
 
-bool isOverlapping(AABB *a, AABB *b);
+bool isOverlapping(const AABB &a, const AABB &b);
 void isActive(std::vector<debut> &activeList);
 
 std::vector<knife_edge> EdgeInit(std::vector<AABB> boxes);

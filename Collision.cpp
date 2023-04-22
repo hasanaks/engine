@@ -1,9 +1,9 @@
 #include "Collision.hpp"
 
-bool isOverlapping(AABB *a, AABB *b) // helper funtion
+bool isOverlapping(const AABB &a, const AABB &b) // helper funtion
 {
-  Vector2f d1 = a->min - b->max;
-  Vector2f d2 = b->min - a->max;
+  Vector2f d1 = a.min - b.max;
+  Vector2f d2 = b.min - a.max;
 
   if (d1.x() > 0 || d1.y() > 0) {
     return false;
@@ -75,12 +75,9 @@ std::vector<debut> relayer(std::vector<knife_edge> elp) { // inp function
 }
 
 void isActive(std::vector<debut> &activeList) {
-  for (int i = 0; i < activeList.size(); i++) {
-    AABB b1 = activeList[i].b1;
-    AABB b2 = activeList[i].b2;
-    if (!isOverlapping(&b1, &b2)) {
-      activeList.erase(activeList.begin() + i);
-      i--;
-    }
-  }
+  activeList.erase(std::remove_if(activeList.begin(), activeList.end(),
+                                  [](const auto &debut) {
+                                    return !isOverlapping(debut.b1, debut.b2);
+                                  }),
+                   activeList.cend());
 }
