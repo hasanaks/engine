@@ -5,12 +5,6 @@ ImpulseSolver::ImpulseSolver(PhysicsObject *physicsObject1,
     : physicsObject1(physicsObject1), physicsObject2(physicsObject2) {}
 
 void ImpulseSolver::Apply() const {
-  /*Eigen::Vector4f Jacobian;
-  Jacobian[0] = normal[0];			Will be useful when calculations
-  of impulse is written only as matrix multiplication Jacobian[1] = normal[1];
-  Jacobian[2] = -normal[0];
-  Jacobian[3] = -normal[1];*/
-
   Vector2f relativePosition =
       physicsObject2->position - physicsObject1->position;
 
