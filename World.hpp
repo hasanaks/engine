@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ImpulseSolver.hpp"
 #include "Collision.hpp"
 #include "Constraint.hpp"
+#include "ImpulseSolver.hpp"
 #include "PhysicsObject.hpp"
 #include <algorithm>
 #include <memory>
@@ -18,6 +18,7 @@ public:
   std::vector<PhysicsObject> CopyState();
 
   Vector2f gravity{0};
+
 private:
   std::vector<debut> GetActiveAABB();
 

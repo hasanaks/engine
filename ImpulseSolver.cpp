@@ -11,7 +11,8 @@ void ImpulseSolver::Imp() {
   Jacobian[2] = -normal[0];
   Jacobian[3] = -normal[1];*/
 
-  Vector2f relativePosition = physicsObject2->position - physicsObject1->position;
+  Vector2f relativePosition =
+      physicsObject2->position - physicsObject1->position;
 
   Vector2f normal = relativePosition.normalized();
   float Vd = relativePosition.dot(normal);

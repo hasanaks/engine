@@ -73,8 +73,8 @@ int main() {
     auto currentState = world.CopyState();
     std::vector<PhysicsObject> interpolatedState(currentState.size());
 
-    std::transform(currentState.cbegin(), currentState.cend(), lastState.cbegin(),
-                   interpolatedState.begin(),
+    std::transform(currentState.cbegin(), currentState.cend(),
+                   lastState.cbegin(), interpolatedState.begin(),
                    [interpolation](const auto &p1, const auto &p2) {
                      auto a = p2;
                      a.position = p1.position * (1 - interpolation) +
@@ -89,8 +89,8 @@ int main() {
     BeginMode2D(camera);
 
     for (auto &objects : interpolatedState) {
-      DrawRectangle(objects.position.x(), objects.position.y(), objects.transform.x(),
-                    objects.transform.y(), WHITE);
+      DrawRectangle(objects.position.x(), objects.position.y(),
+                    objects.transform.x(), objects.transform.y(), WHITE);
     }
 
     EndMode2D();
