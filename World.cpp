@@ -40,10 +40,11 @@ void World::ResolveCollisions() {
 
   std::vector<ImpulseSolver> solvers(overlappingBoxes.size(),
                                      ImpulseSolver(nullptr, nullptr));
-  std::transform(overlappingBoxes.cbegin(), overlappingBoxes.cend(), solvers.begin(),
-                 [](const auto &overlappingBox) {
-                   return ImpulseSolver{overlappingBox.first.id, overlappingBox.second.id};
-                 });
+  std::transform(
+      overlappingBoxes.cbegin(), overlappingBoxes.cend(), solvers.begin(),
+      [](const auto &overlappingBox) {
+        return ImpulseSolver{overlappingBox.first.id, overlappingBox.second.id};
+      });
 
   std::for_each(solvers.begin(), solvers.end(),
                 [](auto &solver) { solver.Imp(); });
