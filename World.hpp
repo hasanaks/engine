@@ -14,14 +14,13 @@ public:
   void Step(float dt);
   void AddParticle(const std::shared_ptr<PhysicsObject> &physicsObject);
   void RemoveParticle(const std::shared_ptr<PhysicsObject> &physicsObject);
+  void ResolveCollisions();
   std::vector<PhysicsObject> CopyState();
-  void setBoxList();
-  Vector2f gravity{0};
-  void Echoes();
-  void gebouw();
 
+  Vector2f gravity{0};
 private:
+  std::vector<debut> GetActiveAABB();
+
   std::vector<std::shared_ptr<PhysicsObject>> physicsObjects;
-  std::vector<debut> activeList;
   std::vector<ImpulseSolver> constraints;
 };

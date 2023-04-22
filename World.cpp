@@ -3,8 +3,8 @@
 World::World(Vector2f gravity) : gravity(gravity) {}
 
 void World::Step(float dt) {
-  Echoes();
-  gebouw();
+  ResolveCollisions();
+
   for (auto &physicsObject : physicsObjects) {
     physicsObject->force += physicsObject->mass * gravity;
 
@@ -31,34 +31,29 @@ void World::RemoveParticle(
       physicsObjects.end());
 }
 
-void World::setBoxList() {
-  std::vector<AABB> l1(physicsObjects.size());
-  std::transform(physicsObjects.cbegin(), physicsObjects.cend(), l1.begin(),
-                 [](const auto &object) { return AABB(object.get()); });
-  activeList = relayer(EdgeInit(l1));
-  isActive(activeList);
-}
-
-void World::Echoes() {
-  setBoxList();
-
-  constraints = {};
-
-  for (int i = 0; i < activeList.size(); i++) {
-    ImpulseSolver c{activeList[i].b1.id, activeList[i].b2.id};
-    constraints.push_back(c);
-  }
-}
-
-void World::gebouw() {
-  for (auto &constraint : constraints) {
-    constraint.Imp();
-  }
-}
-
 std::vector<PhysicsObject> World::CopyState() {
   std::vector<PhysicsObject> copied(physicsObjects.size());
   std::transform(physicsObjects.cbegin(), physicsObjects.cend(), copied.begin(),
                  [](const auto &physicsObject) { return *physicsObject; });
   return copied;
+}
+
+void World::ResolveCollisions() {
+  auto activeBoxes = GetActiveAABB();
+
+  std::vector<ImpulseSolver> solvers(activeBoxes.size(), ImpulseSolver(nullptr, nullptr));
+  std::transform(activeBoxes.cbegin(), activeBoxes.cend(), solvers.begin(),
+                 [](const auto &activeBox) { return ImpulseSolver{activeBox.b1.id, activeBox.b2.id}; });
+
+  std::for_each(solvers.begin(), solvers.end(),
+                [](auto &solver) { solver.Imp(); });
+}
+
+std::vector<debut> World::GetActiveAABB() {
+  std::vector<AABB> l1(physicsObjects.size());
+  std::transform(physicsObjects.cbegin(), physicsObjects.cend(), l1.begin(),
+                 [](const auto &object) { return AABB(object.get()); });
+  auto activeList = relayer(EdgeInit(l1));
+  isActive(activeList);
+  return activeList;
 }
