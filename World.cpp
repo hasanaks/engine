@@ -5,7 +5,7 @@ World::World(Vector2f gravity) : gravity(gravity) {}
 void World::Step(float dt) {
   ResolveCollisions();
 
-  for (auto &physicsObject : physicsObjects) {
+  std::for_each(physicsObjects.begin(), physicsObjects.end(), [dt, this](auto &physicsObject) {
     physicsObject->force += physicsObject->mass * gravity;
 
     auto acceleration = physicsObject->force / physicsObject->mass;
@@ -14,7 +14,7 @@ void World::Step(float dt) {
     physicsObject->velocity += acceleration * dt;
 
     physicsObject->force = {0, 0};
-  }
+  });
 }
 
 void World::AddParticle(const std::shared_ptr<PhysicsObject> &physicsObject) {
