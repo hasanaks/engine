@@ -39,18 +39,9 @@ void World::UpdatePhysicsObject(
 }
 
 void World::ResolveCollisions() {
-  auto overlappingBoxes = FindOverlappingBoxes(GetAABBs());
-
-  std::vector<ImpulseSolver> solvers(overlappingBoxes.size(),
-                                     ImpulseSolver(nullptr, nullptr));
-  std::transform(
-      overlappingBoxes.cbegin(), overlappingBoxes.cend(), solvers.begin(),
-      [](const auto &overlappingBox) {
-        return ImpulseSolver{overlappingBox.first.id, overlappingBox.second.id};
-      });
-
-  std::for_each(solvers.begin(), solvers.end(),
-                [](auto &solver) { solver.Apply(); });
+  for (const auto &overlappingBox : FindOverlappingBoxes(GetAABBs())) {
+    ImpulseSolver(overlappingBox.first.id, overlappingBox.second.id).Apply();
+  }
 }
 
 std::vector<AABB> World::GetAABBs() {
