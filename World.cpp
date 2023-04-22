@@ -17,16 +17,18 @@ void World::Step(float dt) {
   }
 }
 
-void World::AddParticle(std::shared_ptr<PhysicsObject> physicsObject) {
+void World::AddParticle(const std::shared_ptr<PhysicsObject> &physicsObject) {
   if (std::find(physicsObjects.begin(), physicsObjects.end(), physicsObject) ==
       std::end(physicsObjects)) {
     physicsObjects.push_back(physicsObject);
   }
 }
 
-void World::RemoveParticle(std::shared_ptr<PhysicsObject> physicsObject) {
-  physicsObjects.erase(std::remove(physicsObjects.begin(), physicsObjects.end(), physicsObject),
-                  physicsObjects.end());
+void World::RemoveParticle(
+    const std::shared_ptr<PhysicsObject> &physicsObject) {
+  physicsObjects.erase(
+      std::remove(physicsObjects.begin(), physicsObjects.end(), physicsObject),
+      physicsObjects.end());
 }
 
 void World::setBoxList() {

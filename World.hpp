@@ -12,8 +12,8 @@ class World {
 public:
   explicit World(Vector2f gravity);
   void Step(float dt);
-  void AddParticle(std::shared_ptr<PhysicsObject> physicsObject);
-  void RemoveParticle(std::shared_ptr<PhysicsObject> physicsObject);
+  void AddParticle(const std::shared_ptr<PhysicsObject> &physicsObject);
+  void RemoveParticle(const std::shared_ptr<PhysicsObject> &physicsObject);
   std::vector<PhysicsObject> CopyState();
   static AABB BuildBox(std::shared_ptr<PhysicsObject> pickle);
   void setBoxList();
