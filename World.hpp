@@ -20,6 +20,7 @@ public:
   Vector2f gravity{0};
 
 private:
+  void UpdatePhysicsObject(const std::shared_ptr<PhysicsObject>& physicsObject, float dt);
   void ResolveCollisions();
   std::vector<AABB> GetAABBs();
 

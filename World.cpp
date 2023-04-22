@@ -5,18 +5,9 @@ World::World(Vector2f gravity) : gravity(gravity) {}
 void World::Step(float dt) {
   ResolveCollisions();
 
-  std::for_each(physicsObjects.begin(), physicsObjects.end(),
-                [dt, this](auto &physicsObject) {
-                  physicsObject->force += physicsObject->mass * gravity;
-
-                  auto acceleration =
-                      physicsObject->force / physicsObject->mass;
-                  physicsObject->position += physicsObject->velocity * dt +
-                                             0.5f * acceleration * dt * dt;
-                  physicsObject->velocity += acceleration * dt;
-
-                  physicsObject->force = {0, 0};
-                });
+  for (const auto &physicsObject : physicsObjects) {
+    UpdatePhysicsObject(physicsObject, dt);
+  }
 }
 
 void World::AddParticle(const std::shared_ptr<PhysicsObject> &physicsObject) {
@@ -33,6 +24,18 @@ std::vector<PhysicsObject> World::CopyState() {
   std::transform(physicsObjects.cbegin(), physicsObjects.cend(), copied.begin(),
                  [](const auto &physicsObject) { return *physicsObject; });
   return copied;
+}
+
+void World::UpdatePhysicsObject(
+    const std::shared_ptr<PhysicsObject> &physicsObject, float dt) {
+  physicsObject->force += physicsObject->mass * gravity;
+
+  auto acceleration = physicsObject->force / physicsObject->mass;
+  physicsObject->position +=
+      physicsObject->velocity * dt + 0.5f * acceleration * dt * dt;
+  physicsObject->velocity += acceleration * dt;
+
+  physicsObject->force = {0, 0};
 }
 
 void World::ResolveCollisions() {
