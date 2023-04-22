@@ -15,12 +15,12 @@ public:
   void Step(float dt);
   void AddParticle(const std::shared_ptr<PhysicsObject> &physicsObject);
   void RemoveParticle(const std::shared_ptr<PhysicsObject> &physicsObject);
-  void ResolveCollisions();
   std::vector<PhysicsObject> CopyState();
 
   Vector2f gravity{0};
 
 private:
+  void ResolveCollisions();
   std::vector<AABB> GetAABBs();
 
   std::unordered_set<std::shared_ptr<PhysicsObject>> physicsObjects;
