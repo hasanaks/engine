@@ -9,7 +9,7 @@ class ImpulseSolver {
 
 public:
   ImpulseSolver(PhysicsObject *physicsObject1, PhysicsObject *physicsObject2);
-  void Imp();
+  void Apply();
 
 private:
   PhysicsObject *physicsObject1;

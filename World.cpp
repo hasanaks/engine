@@ -47,7 +47,7 @@ void World::ResolveCollisions() {
       });
 
   std::for_each(solvers.begin(), solvers.end(),
-                [](auto &solver) { solver.Imp(); });
+                [](auto &solver) { solver.Apply(); });
 }
 
 std::vector<AABB> World::GetAABBs() {
