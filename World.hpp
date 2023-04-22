@@ -21,7 +21,7 @@ public:
   Vector2f gravity{0};
 
 private:
-  std::vector<debut> GetActiveAABB();
+  std::vector<AABB> GetAABBs();
 
   std::unordered_set<std::shared_ptr<PhysicsObject>> physicsObjects;
   std::vector<ImpulseSolver> constraints;

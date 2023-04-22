@@ -6,10 +6,9 @@ AABB::AABB(PhysicsObject *physicsObject)
       max(physicsObject->position + Vector2f{physicsObject->transform.x(), 0}) {
 }
 
-bool isOverlapping(const AABB &a, const AABB &b) // helper funtion
-{
-  Vector2f d1 = a.min - b.max;
-  Vector2f d2 = b.min - a.max;
+bool AABB::OverlappingWith(const AABB &anotherBox) const {
+  Vector2f d1 = min - anotherBox.max;
+  Vector2f d2 = anotherBox.min - max;
 
   if (d1.x() > 0 || d1.y() > 0) {
     return false;
@@ -21,69 +20,85 @@ bool isOverlapping(const AABB &a, const AABB &b) // helper funtion
   return true;
 }
 
-std::vector<knife_edge> EdgeInit(std::vector<AABB> boxes) {
-  std::vector<knife_edge> elp;
-  for (int i = 0; i < boxes.size(); i++) {
-    knife_edge begin{};
-    knife_edge end{};
-    begin.box = boxes[i];
+namespace {
+struct SortedBox {
+  AABB box;
+  int b;
+  int mag;
+};
+
+// returns a vector of sorted boxes of size boxes.size * 2
+std::vector<SortedBox> SortBoxes(std::vector<AABB> boxes) {
+  std::vector<SortedBox> sortedBoxes(boxes.size() * 2);
+
+  for (const auto &box : boxes) {
+    SortedBox begin{};
+    SortedBox end{};
+    begin.box = box;
     begin.b = 1;
     begin.mag = begin.box.min.x();
-    end.box = boxes[i];
+    end.box = box;
     end.b = 0;
     end.mag = begin.box.max.x();
-    elp.push_back(begin);
-    elp.push_back(end);
+    sortedBoxes.push_back(begin);
+    sortedBoxes.push_back(end);
   }
 
   std::sort(
-      elp.begin(), elp.end(),
-      [](const knife_edge &a, const knife_edge &b) { return a.mag < b.mag; });
+      sortedBoxes.begin(), sortedBoxes.end(),
+      [](const auto &box1, const auto &box2) { return box1.mag < box2.mag; });
 
-  return elp;
-} // input function
+  return sortedBoxes;
+}
 
-std::vector<debut> relayer(std::vector<knife_edge> elp) { // inp function
-  std::vector<debut> activeList;
+void FilterActiveBoxes(std::vector<std::pair<AABB, AABB>> &boxPairs) {
+  boxPairs.erase(std::remove_if(boxPairs.begin(), boxPairs.end(),
+                                [](const auto &boxPair) {
+                                  return boxPair.first.OverlappingWith(
+                                      boxPair.second);
+                                }),
+                 boxPairs.cend());
+}
+} // namespace
 
-  if (elp.size() < 4) {
-    return activeList;
+std::vector<std::pair<AABB, AABB>>
+FindOverlappingBoxes(std::vector<AABB> boxes) {
+  const auto sortedBoxes = SortBoxes(boxes);
+  std::vector<std::pair<AABB, AABB>> overlappingList;
+
+  // search for overlapping boxes when there are at least 2 boxes
+  if (sortedBoxes.size() <= 2) {
+    return overlappingList;
   }
 
-  int id = 0;
+  auto id = 0;
 
-  while (id < elp.size() - 1) {
-    if (elp[id].b != 1) {
+  while (id < sortedBoxes.size() - 1) {
+    if (sortedBoxes[id].b != 1) {
       id++;
       continue;
     }
 
-    knife_edge key = elp[id];
+    const auto key = sortedBoxes[id];
 
-    int count = id + 1;
-    knife_edge lock = elp[count];
+    auto count = id + 1;
+    auto lock = sortedBoxes[count];
 
     while (key.box.id != lock.box.id) {
       if (lock.b == 1) {
-        activeList.push_back(debut{key.box, lock.box});
+        overlappingList.emplace_back(key.box, lock.box);
       }
 
       count++;
-      if (count >= elp.size())
+      if (count >= sortedBoxes.size())
         break;
 
-      lock = elp[count];
+      lock = sortedBoxes[count];
     }
 
     id++;
   }
-  return activeList;
-}
 
-void isActive(std::vector<debut> &activeList) {
-  activeList.erase(std::remove_if(activeList.begin(), activeList.end(),
-                                  [](const auto &debut) {
-                                    return !isOverlapping(debut.b1, debut.b2);
-                                  }),
-                   activeList.cend());
+  FilterActiveBoxes(overlappingList);
+  return overlappingList;
 }

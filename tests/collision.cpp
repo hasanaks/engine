@@ -13,5 +13,5 @@ TEST_CASE("Overlap") {
   AABB box1(&object1);
   AABB box2(&object2);
 
-  CHECK(isOverlapping(box1, box2));
+  CHECK(box1.OverlappingWith(box2));
 }

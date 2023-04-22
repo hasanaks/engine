@@ -36,24 +36,22 @@ std::vector<PhysicsObject> World::CopyState() {
 }
 
 void World::ResolveCollisions() {
-  auto activeBoxes = GetActiveAABB();
+  auto overlappingBoxes = FindOverlappingBoxes(GetAABBs());
 
-  std::vector<ImpulseSolver> solvers(activeBoxes.size(),
+  std::vector<ImpulseSolver> solvers(overlappingBoxes.size(),
                                      ImpulseSolver(nullptr, nullptr));
-  std::transform(activeBoxes.cbegin(), activeBoxes.cend(), solvers.begin(),
-                 [](const auto &activeBox) {
-                   return ImpulseSolver{activeBox.b1.id, activeBox.b2.id};
+  std::transform(overlappingBoxes.cbegin(), overlappingBoxes.cend(), solvers.begin(),
+                 [](const auto &overlappingBox) {
+                   return ImpulseSolver{overlappingBox.first.id, overlappingBox.second.id};
                  });
 
   std::for_each(solvers.begin(), solvers.end(),
                 [](auto &solver) { solver.Imp(); });
 }
 
-std::vector<debut> World::GetActiveAABB() {
-  std::vector<AABB> l1(physicsObjects.size());
-  std::transform(physicsObjects.cbegin(), physicsObjects.cend(), l1.begin(),
+std::vector<AABB> World::GetAABBs() {
+  std::vector<AABB> AABBs(physicsObjects.size());
+  std::transform(physicsObjects.cbegin(), physicsObjects.cend(), AABBs.begin(),
                  [](const auto &object) { return AABB(object.get()); });
-  auto activeList = relayer(EdgeInit(l1));
-  isActive(activeList);
-  return activeList;
+  return AABBs;
 }
