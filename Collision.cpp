@@ -1,9 +1,11 @@
 #include "Collision.hpp"
 
-AABB::AABB(PhysicsObject *physicsObject)
-    : id(physicsObject),
-      min(physicsObject->position - Vector2f{0, physicsObject->transform.y()}),
-      max(physicsObject->position + Vector2f{physicsObject->transform.x(), 0}) {
+AABB::AABB(PhysicsObject *physicsObject) : id(physicsObject) {
+  // if the object doesn't have a collider then AABB will be empty as well
+  const auto &collider = physicsObject->collider.value_or(Collider{});
+
+  min = physicsObject->position - Vector2f{0, collider.dimensions.y()};
+  max = physicsObject->position - Vector2f{collider.dimensions.x(), 0};
 }
 
 bool AABB::OverlappingWith(const AABB &anotherBox) const {

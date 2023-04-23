@@ -47,7 +47,7 @@ int main() {
 
       auto pos = GetScreenToWorld2D(GetMousePosition(), camera);
       physicsObject->position = Vector2f{pos.x, pos.y};
-      physicsObject->transform = Vector2f(60.0f, 60.0f);
+      physicsObject->collider = Collider{Vector2f{60.0f, 60.0f}};
 
       world.AddParticle(physicsObject);
     }
@@ -88,9 +88,13 @@ int main() {
 
     BeginMode2D(camera);
 
-    for (auto &objects : interpolatedState) {
-      DrawRectangle(objects.position.x(), objects.position.y(),
-                    objects.transform.x(), objects.transform.y(), WHITE);
+    for (const auto &object : interpolatedState) {
+      if (!object.collider.has_value())
+        continue;
+
+      const auto &collider = object.collider.value();
+      DrawRectangle(object.position.x(), object.position.y(),
+                    collider.dimensions.x(), collider.dimensions.y(), WHITE);
     }
 
     EndMode2D();
