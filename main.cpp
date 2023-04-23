@@ -95,7 +95,6 @@ int main() {
       const auto &collider = object.collider.value();
       DrawRectangle(object.position.x(), object.position.y(),
                     collider.dimensions.x(), collider.dimensions.y(), WHITE);
-
     }
 
     EndMode2D();
