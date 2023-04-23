@@ -56,7 +56,7 @@ std::vector<SortedBox> SortBoxes(std::vector<AABB> boxes) {
 void FilterActiveBoxes(std::vector<std::pair<AABB, AABB>> &boxPairs) {
   boxPairs.erase(std::remove_if(boxPairs.begin(), boxPairs.end(),
                                 [](const auto &boxPair) {
-                                  return boxPair.first.OverlappingWith(
+                                  return !boxPair.first.OverlappingWith(
                                       boxPair.second);
                                 }),
                  boxPairs.cend());
