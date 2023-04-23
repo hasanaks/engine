@@ -5,7 +5,7 @@ AABB::AABB(PhysicsObject *physicsObject) : id(physicsObject) {
   const auto &collider = physicsObject->collider.value_or(Collider{});
 
   min = physicsObject->position - Vector2f{0, collider.dimensions.y()};
-  max = physicsObject->position - Vector2f{collider.dimensions.x(), 0};
+  max = physicsObject->position + Vector2f{collider.dimensions.x(), 0};
 }
 
 bool AABB::OverlappingWith(const AABB &anotherBox) const {
