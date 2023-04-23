@@ -8,7 +8,7 @@ TEST_CASE("particle motion physics") {
   auto particle = std::make_shared<PhysicsObject>();
   particle->mass = 10;
 
-  world.AddParticle(particle);
+  world.AddPhysicsObject(particle);
 
   world.Step(1);
   CHECK(particle->position == Vector2f{0, -5});

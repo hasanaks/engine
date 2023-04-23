@@ -49,7 +49,7 @@ int main() {
       physicsObject->position = Vector2f{pos.x, pos.y};
       physicsObject->collider = Collider{Vector2f{60.0f, 60.0f}};
 
-      world.AddParticle(physicsObject);
+      world.AddPhysicsObject(physicsObject);
     }
 
     accumulator += frameTime;
@@ -95,6 +95,7 @@ int main() {
       const auto &collider = object.collider.value();
       DrawRectangle(object.position.x(), object.position.y(),
                     collider.dimensions.x(), collider.dimensions.y(), WHITE);
+
     }
 
     EndMode2D();

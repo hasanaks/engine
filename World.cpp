@@ -10,11 +10,11 @@ void World::Step(float dt) {
   }
 }
 
-void World::AddParticle(const std::shared_ptr<PhysicsObject> &physicsObject) {
+void World::AddPhysicsObject(const std::shared_ptr<PhysicsObject> &physicsObject) {
   physicsObjects.insert(physicsObject);
 }
 
-void World::RemoveParticle(
+void World::RemovePhysicsObject(
     const std::shared_ptr<PhysicsObject> &physicsObject) {
   physicsObjects.erase(physicsObject);
 }
