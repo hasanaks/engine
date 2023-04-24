@@ -3,6 +3,6 @@
 
 using Vector2f = Eigen::Vector2f;
 
-struct Collider {
+struct RectangleCollider {
   Vector2f dimensions;
 };

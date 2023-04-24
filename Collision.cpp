@@ -2,7 +2,7 @@
 
 AABB::AABB(PhysicsObject *physicsObject) : id(physicsObject) {
   // if the object doesn't have a collider then AABB will be empty as well
-  const auto &collider = physicsObject->collider.value_or(Collider{});
+  const auto &collider = physicsObject->rectangleCollider.value_or(RectangleCollider{});
 
   min = physicsObject->position - Vector2f{0, collider.dimensions.y()};
   max = physicsObject->position + Vector2f{collider.dimensions.x(), 0};

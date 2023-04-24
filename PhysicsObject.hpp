@@ -8,5 +8,5 @@ struct PhysicsObject {
   Vector2f velocity;
   Vector2f force;
 
-  std::optional<Collider> collider;
+  std::optional<RectangleCollider> rectangleCollider;
 };
