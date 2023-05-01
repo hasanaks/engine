@@ -14,12 +14,6 @@ FetchContent_Declare(
   GIT_SHALLOW TRUE
 )
 FetchContent_Declare(
-  raygui
-  GIT_REPOSITORY https://github.com/raysan5/raygui
-  GIT_TAG 3.2
-  GIT_SHALLOW TRUE
-)
-FetchContent_Declare(
   doctest
   GIT_REPOSITORY https://github.com/doctest/doctest
   GIT_TAG v2.4.9
@@ -31,14 +25,15 @@ FetchContent_Declare(
   GIT_TAG 3.4.0
   GIT_SHALLOW TRUE
 )
-FetchContent_MakeAvailable(raylib doctest raygui)
+FetchContent_MakeAvailable(raylib doctest)
 FetchContent_Populate(eigen)
+add_subdirectory(imgui)
 
 add_library(engine World.cpp Collision.cpp Constraint.cpp ImpulseSolver.cpp)
 target_include_directories(engine PUBLIC ${eigen_SOURCE_DIR} ${raygui_SOURCE_DIR}/src)
 
 add_executable(engine-exec main.cpp)
-target_link_libraries(engine-exec engine raylib)
+target_link_libraries(engine-exec engine raylib imgui)
 
 include_directories(${doctest_SOURCE_DIR}/doctest)
 include(${doctest_SOURCE_DIR}/scripts/cmake/doctest.cmake)
