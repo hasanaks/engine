@@ -11,6 +11,7 @@
 
 class World {
 public:
+  World() = default;
   explicit World(Vector2f gravity);
   void Step(float dt);
   void AddPhysicsObject(const std::shared_ptr<PhysicsObject> &physicsObject);
