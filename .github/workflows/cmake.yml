@@ -22,6 +22,7 @@ jobs:
 
     - name: Install Dependencies
       run: |
+        cat /etc/apt/sources.list
         sudo apt update
         sudo apt build-dep libsfml-dev
 
