@@ -21,7 +21,9 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Install Dependencies
-      run: sudo apt build-dep libsfml-dev
+      run: |
+        sudo apt update
+        sudo apt build-dep libsfml-dev
 
     - name: Configure CMake
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
