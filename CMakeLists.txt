@@ -7,36 +7,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(FetchContent)
-FetchContent_Declare(
-  raylib
-  GIT_REPOSITORY https://github.com/raysan5/raylib
-  GIT_TAG 4.2.0
-  GIT_SHALLOW TRUE
-)
-FetchContent_Declare(
-  doctest
-  GIT_REPOSITORY https://github.com/doctest/doctest
-  GIT_TAG v2.4.9
-  GIT_SHALLOW TRUE
-)
-FetchContent_Declare(
-  eigen
-  GIT_REPOSITORY https://gitlab.com/libeigen/eigen
-  GIT_TAG 3.4.0
-  GIT_SHALLOW TRUE
-)
-FetchContent_MakeAvailable(raylib doctest)
-FetchContent_Populate(eigen)
-add_subdirectory(imgui)
+include(CTest)
+
+add_subdirectory(external/imgui)
+add_subdirectory(external/sfml)
+add_subdirectory(external/eigen)
+add_subdirectory(external/doctest)
 
 add_library(engine World.cpp Collision.cpp Constraint.cpp ImpulseSolver.cpp)
-target_include_directories(engine PUBLIC ${eigen_SOURCE_DIR} ${raygui_SOURCE_DIR}/src)
+target_link_libraries(engine PUBLIC eigen)
+add_subdirectory(tests)
 
 add_executable(engine-exec main.cpp)
-target_link_libraries(engine-exec engine raylib imgui)
-
-include_directories(${doctest_SOURCE_DIR}/doctest)
-include(${doctest_SOURCE_DIR}/scripts/cmake/doctest.cmake)
-
-include(CTest)
-add_subdirectory(tests)
+target_link_libraries(engine-exec engine sfml-graphics imgui ImGui-SFML::ImGui-SFML)
