@@ -22,7 +22,7 @@ jobs:
 
     - name: Install Dependencies
       run: |
-        sudo apt install libx11-dev libxrandr-dev libudev-dev libfreetype-dev libopengl-dev libflac-dev libogg-dev libvorbis-dev libvorbisenc2 libvorbisfile3 libopenal-dev
+        sudo apt install libx11-dev libxrandr-dev libudev-dev libfreetype-dev libopengl-dev libflac-dev libogg-dev libvorbis-dev libvorbisenc2 libvorbisfile3 libopenal-dev libglx-dev
 
     - name: Configure CMake
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
