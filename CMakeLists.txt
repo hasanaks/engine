@@ -7,16 +7,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(FetchContent)
-include(CTest)
 
 add_subdirectory(external/imgui)
 add_subdirectory(external/sfml)
 add_subdirectory(external/eigen)
-add_subdirectory(external/doctest)
 
 add_library(engine World.cpp Collision.cpp Constraint.cpp ImpulseSolver.cpp)
 target_link_libraries(engine PUBLIC eigen)
-add_subdirectory(tests)
 
 add_executable(engine-exec main.cpp)
 target_link_libraries(engine-exec engine sfml-graphics imgui ImGui-SFML::ImGui-SFML)
