@@ -7,6 +7,9 @@ build/
 # CMake
 Testing/
 
+# Imgui
+imgui.ini
+
 # Other
 compile_commands.json
 .cache/
