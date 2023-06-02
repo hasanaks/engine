@@ -1,5 +1,6 @@
 #include "Camera.hpp"
 #include "World.hpp"
+#include "Math.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -89,16 +90,15 @@ int main() {
     window.clear();
 
     // interpolate last and current state
-    const auto interpolation = physicsAccumulator / physicsTimeStep;
+    const auto alpha = physicsAccumulator / physicsTimeStep;
     std::vector<PhysicsObject> state(currentState.size());
 
     std::transform(currentState.cbegin(), currentState.cend(),
                    lastState.cbegin(), state.begin(),
-                   [interpolation](const auto &p1, const auto &p2) {
-                     auto a = p2;
-                     a.position = p1.position * (1 - interpolation) +
-                                  p2.position * interpolation;
-                     return a;
+                   [alpha](const auto &p1, const auto &p2) {
+                     auto object = p2;
+                     object.position = Lerp(p1.position, p2.position, alpha);
+                     return p2;
                    });
 
     // render objects

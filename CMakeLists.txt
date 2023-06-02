@@ -12,7 +12,7 @@ add_subdirectory(external/imgui)
 add_subdirectory(external/sfml)
 add_subdirectory(external/eigen)
 
-add_library(engine World.cpp Collision.cpp Constraint.cpp ImpulseSolver.cpp)
+add_library(engine World.cpp Collision.cpp Constraint.cpp ImpulseSolver.cpp Math.cpp)
 target_link_libraries(engine PUBLIC eigen)
 
 add_executable(engine-exec main.cpp Camera.cpp)
