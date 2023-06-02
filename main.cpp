@@ -27,6 +27,8 @@ int main() {
   const float physicsTimeStep = 0.02f;
   float physicsAccumulator = 0;
 
+  bool simulationRunning = true;
+
   sf::Clock dtClock;
   while (window.isOpen()) {
     const auto deltaTime = dtClock.restart();
@@ -54,14 +56,22 @@ int main() {
           world.AddPhysicsObject(object);
         }
       }
+
+      if (event.type == sf::Event::KeyPressed) {
+        if (event.key.code == sf::Keyboard::Space) {
+          simulationRunning = !simulationRunning;
+        }
+      }
     }
 
     if (!ImGui::GetIO().WantCaptureMouse) {
       camera.Update(deltaTime.asSeconds(), window);
     }
 
-    // step physics
-    physicsAccumulator += deltaTime.asSeconds();
+    if (simulationRunning) {
+      // step physics
+      physicsAccumulator += deltaTime.asSeconds();
+    }
 
     std::vector<PhysicsObject> lastState;
 
@@ -80,15 +90,6 @@ int main() {
 
     const auto currentState = world.CopyState();
 
-    // imgui
-    ImGui::SFML::Update(window, deltaTime);
-
-    ImGui::Begin("Info");
-    ImGui::Text("Remaining object(s): %ld", currentState.size());
-    ImGui::End();
-
-    window.clear();
-
     // interpolate last and current state
     const auto alpha = physicsAccumulator / physicsTimeStep;
     std::vector<PhysicsObject> state(currentState.size());
@@ -100,6 +101,8 @@ int main() {
                      object.position = Lerp(p1.position, p2.position, alpha);
                      return p2;
                    });
+
+    window.clear();
 
     // render objects
     for (const auto &object : state) {
@@ -114,6 +117,18 @@ int main() {
         window.draw(rect);
       }
     }
+
+    // imgui
+    ImGui::SFML::Update(window, deltaTime);
+
+    ImGui::Begin("Info");
+    if (simulationRunning) {
+      ImGui::Text("Running");
+    } else {
+      ImGui::Text("Stopped");
+    }
+    ImGui::Text("Remaining object(s): %ld", currentState.size());
+    ImGui::End();
 
     ImGui::SFML::Render(window);
 
