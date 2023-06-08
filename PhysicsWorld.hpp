@@ -9,10 +9,10 @@
 #include <unordered_set>
 #include <vector>
 
-class World {
+class PhysicsWorld {
 public:
-  World() = default;
-  explicit World(Vector2f gravity);
+  PhysicsWorld() = default;
+  explicit PhysicsWorld(Vector2f gravity);
   void Step(float dt);
   void AddPhysicsObject(const std::shared_ptr<PhysicsObject> &physicsObject);
   void RemovePhysicsObject(const std::shared_ptr<PhysicsObject> &physicsObject);

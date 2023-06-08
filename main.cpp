@@ -1,5 +1,5 @@
 #include "Camera.hpp"
-#include "World.hpp"
+#include "PhysicsWorld.hpp"
 #include "Math.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -22,7 +22,7 @@ int main() {
 
   Camera camera(window.getDefaultView(), 20, 0.005f);
 
-  World world({0, 10.f});
+  PhysicsWorld physicsWorld({0, 10.f});
 
   const float physicsTimeStep = 0.02f;
   float physicsAccumulator = 0;
@@ -53,7 +53,7 @@ int main() {
           object->position = Vector2f{mousePosition.x, mousePosition.y};
           object->mass = 1;
 
-          world.AddPhysicsObject(object);
+          physicsWorld.AddPhysicsObject(object);
         }
       }
 
@@ -76,19 +76,19 @@ int main() {
     std::vector<PhysicsObject> lastState;
 
     if (physicsAccumulator < physicsTimeStep) {
-      lastState = world.CopyState();
+      lastState = physicsWorld.CopyState();
     }
 
     while (physicsAccumulator >= physicsTimeStep) {
       if (physicsAccumulator - physicsTimeStep < physicsTimeStep) {
-        lastState = world.CopyState();
+        lastState = physicsWorld.CopyState();
       }
 
-      world.Step(physicsTimeStep);
+      physicsWorld.Step(physicsTimeStep);
       physicsAccumulator -= physicsTimeStep;
     }
 
-    const auto currentState = world.CopyState();
+    const auto currentState = physicsWorld.CopyState();
 
     // interpolate last and current state
     const auto alpha = physicsAccumulator / physicsTimeStep;
