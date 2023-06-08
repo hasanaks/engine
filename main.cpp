@@ -1,4 +1,3 @@
-#include "Camera.hpp"
 #include "Math.hpp"
 #include "PhysicsWorld.hpp"
 
@@ -21,8 +20,6 @@ int main() {
     return 1;
   }
 
-  Camera camera(window.getDefaultView(), 20, 0.005f);
-
   std::shared_ptr<PhysicsObject> selectedObject;
   std::unordered_set<std::shared_ptr<PhysicsObject>> objects;
 
@@ -40,7 +37,6 @@ int main() {
     sf::Event event;
     while (window.pollEvent(event)) {
       ImGui::SFML::ProcessEvent(window, event);
-      camera.UpdateEvents(event);
 
       if (event.type == sf::Event::Closed) {
         window.close();
@@ -55,9 +51,6 @@ int main() {
                     objects.cbegin(), objects.cend(),
                     [&window,
                      &event](const std::shared_ptr<PhysicsObject> &object) {
-                      const auto mousePosition = window.mapPixelToCoords(
-                          {event.mouseButton.x, event.mouseButton.y});
-
                       if (const auto &collider = object->rectangleCollider) {
                         sf::FloatRect rect(
                             sf::Vector2f{object->position.x(),
@@ -65,7 +58,7 @@ int main() {
                             sf::Vector2f{collider->dimensions.x(),
                                          collider->dimensions.y()});
 
-                        if (rect.contains(mousePosition)) {
+                        if (rect.contains(event.mouseButton.x, event.mouseButton.y)) {
                           return true;
                         }
                       }
@@ -76,8 +69,7 @@ int main() {
               selectedObject = *it;
             }
           } else { // create object at mouse position
-            const auto mousePosition = window.mapPixelToCoords(
-                sf::Vector2i{event.mouseButton.x, event.mouseButton.y});
+            const auto mousePosition = sf::Vector2i{event.mouseButton.x, event.mouseButton.y};
 
             const auto object = std::make_shared<PhysicsObject>();
             object->rectangleCollider = RectangleCollider{{100, 100}};
@@ -109,18 +101,13 @@ int main() {
 
     if (selectedObject != nullptr &&
         selectedObject->rectangleCollider.has_value()) {
-      const auto mousePosition =
-          window.mapPixelToCoords(sf::Mouse::getPosition());
+      const auto mousePosition = sf::Mouse::getPosition();
 
       selectedObject->force +=
           ((Vector2f{mousePosition.x, mousePosition.y} -
             selectedObject->rectangleCollider->dimensions) -
            selectedObject->position) *
           deltaTime.asSeconds() * 400;
-    }
-
-    if (!ImGui::GetIO().WantCaptureMouse) {
-      camera.Update(deltaTime.asSeconds(), window);
     }
 
     if (simulationRunning) {
