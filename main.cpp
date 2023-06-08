@@ -1,6 +1,6 @@
 #include "Camera.hpp"
-#include "PhysicsWorld.hpp"
 #include "Math.hpp"
+#include "PhysicsWorld.hpp"
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -10,6 +10,7 @@
 #include <imgui.h>
 
 #include <iostream>
+#include <utility>
 
 int main() {
   sf::RenderWindow window(sf::VideoMode(1200, 800), "engine");
@@ -21,6 +22,9 @@ int main() {
   }
 
   Camera camera(window.getDefaultView(), 20, 0.005f);
+
+  std::shared_ptr<PhysicsObject> selectedObject;
+  std::unordered_set<std::shared_ptr<PhysicsObject>> objects;
 
   PhysicsWorld physicsWorld({0, 10.f});
 
@@ -45,16 +49,55 @@ int main() {
       // create object at the mouse's position
       if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Right) {
-          const auto mousePosition = window.mapPixelToCoords(
-              sf::Vector2i{event.mouseButton.x, event.mouseButton.y});
+          if (sf::Keyboard::isKeyPressed(
+                  sf::Keyboard::LControl)) { // move an object
+            if (const auto &it = std::find_if(
+                    objects.cbegin(), objects.cend(),
+                    [&window,
+                     &event](const std::shared_ptr<PhysicsObject> &object) {
+                      const auto mousePosition = window.mapPixelToCoords(
+                          {event.mouseButton.x, event.mouseButton.y});
 
-          const auto object = std::make_shared<PhysicsObject>();
-          object->rectangleCollider = RectangleCollider{{100, 100}};
-          object->position = Vector2f{mousePosition.x, mousePosition.y};
-          object->mass = 1;
+                      if (const auto &collider = object->rectangleCollider) {
+                        sf::FloatRect rect(
+                            sf::Vector2f{object->position.x(),
+                                         object->position.y()},
+                            sf::Vector2f{collider->dimensions.x(),
+                                         collider->dimensions.y()});
 
-          physicsWorld.AddPhysicsObject(object);
+                        if (rect.contains(mousePosition)) {
+                          return true;
+                        }
+                      }
+
+                      return false;
+                    });
+                it != objects.cend()) {
+              selectedObject = *it;
+            }
+          } else { // create object at mouse position
+            const auto mousePosition = window.mapPixelToCoords(
+                sf::Vector2i{event.mouseButton.x, event.mouseButton.y});
+
+            const auto object = std::make_shared<PhysicsObject>();
+            object->rectangleCollider = RectangleCollider{{100, 100}};
+            object->position = Vector2f{mousePosition.x, mousePosition.y};
+            object->mass = 1;
+
+            objects.insert(object);
+            physicsWorld.AddPhysicsObject(object);
+          }
         }
+      }
+
+      if (event.type == sf::Event::MouseButtonReleased) {
+        if (selectedObject) {
+          selectedObject->force +=
+              selectedObject->position -
+              Vector2f{event.mouseButton.x, event.mouseButton.y};
+        }
+
+        selectedObject = nullptr;
       }
 
       if (event.type == sf::Event::KeyPressed) {
@@ -62,6 +105,18 @@ int main() {
           simulationRunning = !simulationRunning;
         }
       }
+    }
+
+    if (selectedObject != nullptr &&
+        selectedObject->rectangleCollider.has_value()) {
+      const auto mousePosition =
+          window.mapPixelToCoords(sf::Mouse::getPosition());
+
+      selectedObject->force +=
+          ((Vector2f{mousePosition.x, mousePosition.y} -
+            selectedObject->rectangleCollider->dimensions) -
+           selectedObject->position) *
+          deltaTime.asSeconds() * 400;
     }
 
     if (!ImGui::GetIO().WantCaptureMouse) {
